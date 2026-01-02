@@ -1,0 +1,53 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-26: Write Review
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+class Game {
+  +gameId: UUID
+  +title: string
+  +price: decimal
+  +discountPercent: int
+  +status: GameStatus
+  +rejectionReason: string
+}
+
+class Order {
+  +orderId: UUID
+  +orderDate: datetime
+  +totalAmount: decimal
+}
+
+class OrderItem {
+  +orderItemId: UUID
+  +purchasePrice: decimal
+  +discountApplied: int
+}
+
+class Review {
+  +reviewId: UUID
+  +stars: int
+  +text: string
+  +createdAt: datetime
+}
+
+User "1" --> "0..*" Order : places
+Order "1" --> "1..*" OrderItem : contains
+OrderItem "1" --> "1" Game : for
+User "1" --> "0..*" Review : writes
+Review "1" --> "1" Game : about
+note bottom
+Ownership is derived from Order/OrderItem.
+If user owns game => cannot repurchase.
+end note
+@enduml

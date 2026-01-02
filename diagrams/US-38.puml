@@ -1,0 +1,22 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-38: Live Cart Badge
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+class CartItem {
+  +cartItemId: UUID
+  +addedAt: datetime
+}
+
+User "1" --> "0..*" CartItem : has
+@enduml

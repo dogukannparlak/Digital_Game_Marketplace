@@ -1,0 +1,32 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-33: Public User Profile
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+class Developer {
+  +developerId: UUID
+  +name: string
+  +isVerified: bool
+}
+
+class Game {
+  +gameId: UUID
+  +title: string
+  +price: decimal
+  +discountPercent: int
+  +status: GameStatus
+  +rejectionReason: string
+}
+
+Developer "1" --> "0..*" Game : publishes
+@enduml

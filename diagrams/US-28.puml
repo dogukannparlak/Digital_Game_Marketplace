@@ -1,0 +1,43 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-28: Developer Statistics
+class Developer {
+  +developerId: UUID
+  +name: string
+  +isVerified: bool
+}
+
+class Game {
+  +gameId: UUID
+  +title: string
+  +price: decimal
+  +discountPercent: int
+  +status: GameStatus
+  +rejectionReason: string
+}
+
+class Order {
+  +orderId: UUID
+  +orderDate: datetime
+  +totalAmount: decimal
+}
+
+class OrderItem {
+  +orderItemId: UUID
+  +purchasePrice: decimal
+  +discountApplied: int
+}
+
+class Review {
+  +reviewId: UUID
+  +stars: int
+  +text: string
+  +createdAt: datetime
+}
+
+Developer "1" --> "0..*" Game : publishes
+Order "1" --> "1..*" OrderItem : contains
+OrderItem "1" --> "1" Game : for
+Review "1" --> "1" Game : about
+@enduml

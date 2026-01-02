@@ -1,0 +1,32 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-22: View / Edit Cart
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+class Game {
+  +gameId: UUID
+  +title: string
+  +price: decimal
+  +discountPercent: int
+  +status: GameStatus
+  +rejectionReason: string
+}
+
+class CartItem {
+  +cartItemId: UUID
+  +addedAt: datetime
+}
+
+User "1" --> "0..*" CartItem : has
+CartItem "1" --> "1" Game : refers_to
+@enduml

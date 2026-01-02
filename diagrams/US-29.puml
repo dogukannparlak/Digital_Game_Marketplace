@@ -1,0 +1,21 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-29: Game Media Management
+class Developer {
+  +developerId: UUID
+  +name: string
+  +isVerified: bool
+}
+
+class Game {
+  +gameId: UUID
+  +title: string
+  +price: decimal
+  +discountPercent: int
+  +status: GameStatus
+  +rejectionReason: string
+}
+
+Developer "1" --> "0..*" Game : publishes
+@enduml

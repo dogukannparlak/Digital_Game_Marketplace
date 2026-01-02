@@ -1,0 +1,16 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-31: Change Password
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+@enduml

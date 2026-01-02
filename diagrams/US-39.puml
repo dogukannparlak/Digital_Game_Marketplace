@@ -1,0 +1,51 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-39: Ownership Control
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+class Game {
+  +gameId: UUID
+  +title: string
+  +price: decimal
+  +discountPercent: int
+  +status: GameStatus
+  +rejectionReason: string
+}
+
+class Order {
+  +orderId: UUID
+  +orderDate: datetime
+  +totalAmount: decimal
+}
+
+class OrderItem {
+  +orderItemId: UUID
+  +purchasePrice: decimal
+  +discountApplied: int
+}
+
+class CartItem {
+  +cartItemId: UUID
+  +addedAt: datetime
+}
+
+User "1" --> "0..*" Order : places
+Order "1" --> "1..*" OrderItem : contains
+OrderItem "1" --> "1" Game : for
+User "1" --> "0..*" CartItem : has
+CartItem "1" --> "1" Game : refers_to
+note bottom
+Ownership is derived from Order/OrderItem.
+If user owns game => cannot repurchase.
+end note
+@enduml

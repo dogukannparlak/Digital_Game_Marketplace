@@ -1,0 +1,28 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+title US-32: Become a Developer
+enum Role {
+  user
+  developer
+  admin
+}
+
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+class Developer {
+  +developerId: UUID
+  +name: string
+  +isVerified: bool
+}
+
+@enduml
