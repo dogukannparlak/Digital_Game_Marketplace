@@ -1,0 +1,18 @@
+@startuml US-12
+title US-12 Search Games by Name
+
+actor User
+boundary "Web UI" as UI
+control "GameController" as GC
+control "GameService" as GS
+database "GameRepository" as GR
+
+User -> UI: Type "Cyber" in search bar
+UI -> GC: GET /games?query=Cyber
+GC -> GS: searchByTitle("Cyber")
+GS -> GR: findByTitleContains("Cyber")
+GR --> GS: matching games
+GS --> GC: results
+GC --> UI: 200 OK + results
+UI --> User: Render results
+@enduml

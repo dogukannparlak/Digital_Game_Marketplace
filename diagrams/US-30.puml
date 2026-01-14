@@ -1,4 +1,4 @@
-@startuml
+@startuml US-30
 hide circle
 skinparam classAttributeIconSize 0
 title US-30: Profile Update

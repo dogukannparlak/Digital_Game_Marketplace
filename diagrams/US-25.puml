@@ -1,4 +1,4 @@
-@startuml
+@startuml US-25
 hide circle
 skinparam classAttributeIconSize 0
 title US-25: Game Library

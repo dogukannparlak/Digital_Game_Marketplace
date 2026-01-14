@@ -1,4 +1,4 @@
-@startuml
+@startuml US-28
 hide circle
 skinparam classAttributeIconSize 0
 title US-28: Developer Statistics

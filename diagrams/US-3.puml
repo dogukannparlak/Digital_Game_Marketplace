@@ -1,0 +1,18 @@
+@startuml US-03
+title US-03 Browse All Games
+
+actor User
+boundary "Web UI" as UI
+control "GameController" as GC
+control "GameService" as GS
+database "GameRepository" as GR
+
+User -> UI: Open Home Page
+UI -> GC: GET /games
+GC -> GS: listGames()
+GS -> GR: findAll()
+GR --> GS: games(title, price)
+GS --> GC: games
+GC --> UI: 200 OK + list
+UI --> User: Render game cards
+@enduml

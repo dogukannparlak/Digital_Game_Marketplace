@@ -1,233 +1,714 @@
-# Installation Guide
+# 🚀 Installation Guide
 
-This guide covers the complete setup process for the Digital Game Marketplace project.
+## 📋 Table of Contents
 
-## Prerequisites
+- [System Requirements](#system-requirements)
+- [Quick Installation](#quick-installation)
+- [Detailed Installation](#detailed-installation)
+- [Database Setup](#database-setup)
+- [Configuration](#configuration)
+- [Production Deployment](#production-deployment)
+- [Troubleshooting](#troubleshooting)
 
-Before you begin, ensure you have the following installed:
+## System Requirements
 
-| Software | Minimum Version | Download |
-|----------|-----------------|----------|
-| Python | 3.8+ | [python.org](https://www.python.org/downloads/) |
-| Node.js | 18+ | [nodejs.org](https://nodejs.org/) |
-| npm | 9+ | Included with Node.js |
-| Git | Latest | [git-scm.com](https://git-scm.com/) |
+### Minimum Requirements
 
-## Quick Start (Windows)
+**Software**:
+- Python 3.10 or higher
+- Node.js 18.0 or higher
+- npm 9.0 or higher
+- Git 2.30 or higher
 
-The easiest way to start the project on Windows is using the PowerShell script:
+**Hardware**:
+- 2 GB RAM (minimum)
+- 500 MB disk space
+- Internet connection (for dependency downloads)
 
+### Recommended Requirements
+
+**Software**:
+- Python 3.11+
+- Node.js 20.0+
+- npm 10.0+
+- Git 2.40+
+- VS Code (recommended IDE)
+
+**Hardware**:
+- 4 GB+ RAM
+- 2 GB disk space
+- SSD disk
+
+## Quick Installation
+
+### Windows
+
+```bash
+# 1. Clone the project
+git clone https://github.com/dogukannparlak/Digital_Game_Marketplace.git
+cd Digital_Game_Marketplace
+
+# 2. Backend setup
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+
+# 3. Frontend setup
+cd frontend
+npm install
+cd ..
+
+# 4. Database preparation
+python -m backend.seed_data
+
+# 5. Start the project
+start_project.bat
+```
+
+### Linux / macOS
+
+```bash
+# 1. Clone the project
+git clone https://github.com/dogukannparlak/Digital_Game_Marketplace.git
+cd Digital_Game_Marketplace
+
+# 2. Backend setup
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 3. Frontend setup
+cd frontend
+npm install
+cd ..
+
+# 4. Database preparation
+python -m backend.seed_data
+
+# 5. Start backend (Terminal 1)
+uvicorn backend.main:app --reload --port 8000
+
+# 6. Start frontend (Terminal 2)
+cd frontend
+npm run dev
+```
+
+## Detailed Installation
+
+### 1. Python Installation
+
+#### Windows
+
+1. Download Python 3.10+ from [Python.org](https://www.python.org/downloads/)
+2. Run the installer
+3. ✅ Check the "Add Python to PATH" option
+4. Click "Install Now"
+
+Verify installation:
+```bash
+python --version
+# Output: Python 3.11.x
+```
+
+#### Linux (Ubuntu/Debian)
+
+```bash
+sudo apt update
+sudo apt install python3.11 python3.11-venv python3-pip
+```
+
+#### macOS
+
+```bash
+# With Homebrew
+brew install python@3.11
+```
+
+### 2. Node.js Installation
+
+#### Windows / macOS
+
+1. Download the LTS version from [Node.js](https://nodejs.org/)
+2. Run the installer
+3. Click "Next" for all steps
+
+Verify installation:
+```bash
+node --version
+# Output: v20.x.x
+
+npm --version
+# Output: 10.x.x
+```
+
+#### Linux (Ubuntu/Debian)
+
+```bash
+# Add NodeSource repository
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+
+# Install Node.js
+sudo apt-get install -y nodejs
+```
+
+### 3. Git Installation
+
+#### Windows
+
+1. Download [Git for Windows](https://git-scm.com/download/win)
+2. Run the installer
+3. Use default settings
+
+#### Linux
+
+```bash
+sudo apt install git
+```
+
+#### macOS
+
+```bash
+brew install git
+```
+
+### 4. Clone the Project
+
+```bash
+# Via HTTPS
+git clone https://github.com/dogukannparlak/Digital_Game_Marketplace.git
+
+# Via SSH (recommended)
+git clone git@github.com:dogukannparlak/Digital_Game_Marketplace.git
+
+# Go to project directory
+cd Digital_Game_Marketplace
+```
+
+### 5. Backend Setup
+
+#### Create Virtual Environment
+
+**Windows**:
+```bash
+python -m venv .venv
+```
+
+**Linux/macOS**:
+```bash
+python3 -m venv .venv
+```
+
+#### Activate Virtual Environment
+
+**Windows (CMD)**:
+```bash
+.venv\Scripts\activate.bat
+```
+
+**Windows (PowerShell)**:
 ```powershell
-# Navigate to project directory
-cd "C:\path\to\Digital Game Marketplace"
-
-# First time setup with sample data
-.\start_project.ps1 -Seed
-
-# Normal startup (without reseeding database)
-.\start_project.ps1
+.venv\Scripts\Activate.ps1
 ```
 
-This script will:
-1. Seed the database with sample data (if `-Seed` flag is used)
-2. Start the backend server on port 8000
-3. Start the frontend development server on port 5173
-
-## Manual Installation
-
-### Step 1: Clone the Repository
-
+**Linux/macOS**:
 ```bash
-git clone <repository-url>
-cd "Digital Game Marketplace"
+source .venv/bin/activate
 ```
 
-### Step 2: Backend Setup
-
-#### Create Virtual Environment (Recommended)
-
+Verify it's active - you should see `(.venv)` in the prompt:
 ```bash
-# Windows
-python -m venv venv
-.\venv\Scripts\activate
-
-# macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
+(.venv) C:\...\digital-game-marketplace>
 ```
 
 #### Install Dependencies
 
 ```bash
+# Install all packages from requirements.txt
 pip install -r requirements.txt
+
+# Verify installation
+pip list
 ```
 
-#### Seed the Database
+**Main packages installed**:
+- fastapi - Web framework
+- uvicorn - ASGI server
+- sqlalchemy - ORM
+- pydantic - Validation
+- python-jose - JWT
+- passlib - Password hashing
+- pytest - Testing
 
-This creates the database schema and populates it with sample data including:
-- Admin, player, and developer accounts
-- 21 game genres
-- Multiple game developers with real-world inspired games
-
-```bash
-python -m backend.seed_data
-```
-
-#### Start the Backend Server
-
-```bash
-uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-The backend will be available at:
-- API: http://localhost:8000
-- Swagger Docs: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
-### Step 3: Frontend Setup
-
-Open a new terminal window/tab:
+### 6. Frontend Setup
 
 ```bash
 cd frontend
+
+# Install dependencies
 npm install
-npm run dev
+
+# Verify installation
+npm list --depth=0
 ```
 
-The frontend will be available at http://localhost:5173
+**Main packages installed**:
+- react - UI library
+- react-dom - React DOM rendering
+- react-router-dom - Routing
+- axios - HTTP client
+- vite - Build tool
+- tailwindcss - CSS framework
+
+```bash
+# Return to main directory
+cd ..
+```
+
+## Database Setup
+
+### SQLite (Development)
+
+The project uses SQLite by default, no separate installation needed.
+
+#### Create Database
+
+```bash
+# In the backend directory
+python -m backend.seed_data
+```
+
+This command:
+1. Creates database tables
+2. Adds sample users:
+   - Admin: `admin@marketplace.com` / `admin123`
+   - Developer: `dev@marketplace.com` / `dev123`
+   - User: `user@marketplace.com` / `user123`
+3. Adds sample games
+4. Adds sample categories
+
+#### Reset Database
+
+```bash
+# Delete the database file
+rm sql_app.db  # Linux/macOS
+del sql_app.db  # Windows
+
+# Recreate it
+python -m backend.seed_data
+```
+
+### PostgreSQL (Production)
+
+#### PostgreSQL Installation
+
+**Windows**:
+1. Download from [PostgreSQL](https://www.postgresql.org/download/windows/)
+2. Run the installer
+3. Port: 5432 (default)
+4. Set a password
+
+**Linux**:
+```bash
+sudo apt install postgresql postgresql-contrib
+sudo systemctl start postgresql
+```
+
+**macOS**:
+```bash
+brew install postgresql
+brew services start postgresql
+```
+
+#### Create Database
+
+```bash
+# Connect to PostgreSQL
+psql -U postgres
+
+# Create database
+CREATE DATABASE game_marketplace;
+
+# Create user
+CREATE USER marketplace_user WITH PASSWORD 'secure_password';
+
+# Grant permissions
+GRANT ALL PRIVILEGES ON DATABASE game_marketplace TO marketplace_user;
+
+# Exit
+\q
+```
+
+#### Configuration
+
+Edit the `backend/database.py` file:
+
+```python
+# SQLite (development)
+# SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
+
+# PostgreSQL (production)
+SQLALCHEMY_DATABASE_URL = "postgresql://marketplace_user:secure_password@localhost/game_marketplace"
+```
 
 ## Configuration
 
-### Backend Configuration
+### Environment Variables
 
-Key configuration files:
-
-| File | Purpose |
-|------|---------|
-| `backend/database.py` | Database connection settings |
-| `backend/auth_utils.py` | JWT secret key and algorithm |
-| `backend/routers/auth.py` | Token expiration settings |
-
-#### Database Configuration
-
-By default, the project uses SQLite. To switch to PostgreSQL:
-
-```python
-# backend/database.py
-# Change from:
-SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
-
-# To:
-SQLALCHEMY_DATABASE_URL = "postgresql://user:password@localhost/dbname"
-```
-
-#### JWT Configuration
-
-For production, update the secret key in `backend/auth_utils.py`:
-
-```python
-SECRET_KEY = "your-production-secret-key-here"
-```
-
-### Frontend Configuration
-
-The API base URL is configured in the Axios instances within components. The default is `http://localhost:8000`.
-
-## Troubleshooting
-
-### Common Issues
-
-#### 1. Port Already in Use
+Create a `.env` file for production:
 
 ```bash
-# Find process using port 8000 (Windows)
-netstat -ano | findstr :8000
-
-# Kill the process
-taskkill /PID <PID> /F
+# .env
+SECRET_KEY=your-super-secret-key-change-this-in-production
+DATABASE_URL=postgresql://user:pass@localhost/db_name
+ALLOWED_ORIGINS=https://yourdomain.com
+DEBUG=False
 ```
 
-#### 2. Module Not Found Errors
+### CORS Settings
 
-Ensure you're running commands from the project root directory:
-
-```bash
-# Correct way to run seed script
-python -m backend.seed_data
-
-# NOT
-python backend/seed_data.py
-```
-
-#### 3. CORS Errors
-
-The backend is configured to allow all origins in development. For production, update `backend/main.py`:
+In the `backend/main.py` file:
 
 ```python
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://yourdomain.com"],
-    # ...
+    allow_origins=[
+        "http://localhost:5173",  # Development
+        "https://yourdomain.com"  # Production
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 ```
 
-#### 4. Database Locked (SQLite)
+### Frontend API URL
 
-If you see "database is locked" errors, ensure only one instance of the backend is running.
+Create `frontend/src/config.js`:
 
-#### 5. npm Install Fails
+```javascript
+export const API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://api.yourdomain.com'
+    : 'http://localhost:8000';
+```
 
-Clear the npm cache and retry:
+## Running the Project
+
+### Development Mode
+
+#### Automatic Start (Windows)
 
 ```bash
-npm cache clean --force
-rm -rf node_modules package-lock.json
-npm install
+# Batch script
+start_project.bat
+
+# PowerShell script
+.\start_project.ps1
+```
+
+#### Manual Start
+
+**Terminal 1 - Backend**:
+```bash
+# Activate virtual environment
+.venv\Scripts\activate  # Windows
+source .venv/bin/activate  # Linux/macOS
+
+# Start server
+uvicorn backend.main:app --reload --port 8000
+```
+
+Backend running at: http://localhost:8000
+
+**Terminal 2 - Frontend**:
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend running at: http://localhost:5173
+
+### Production Mode
+
+#### Backend
+
+```bash
+# With Gunicorn (Linux/macOS)
+gunicorn backend.main:app -w 4 -k uvicorn.workers.UvicornWorker
+
+# With Uvicorn (Windows)
+uvicorn backend.main:app --host 0.0.0.0 --port 8000
+```
+
+#### Frontend
+
+```bash
+cd frontend
+
+# Create build
+npm run build
+
+# Serve build
+npm run preview
 ```
 
 ## Production Deployment
 
-### Backend
+### Heroku
 
-1. Use Gunicorn with Uvicorn workers:
+#### Backend Deployment
+
 ```bash
-pip install gunicorn
-gunicorn backend.main:app -w 4 -k uvicorn.workers.UvicornWorker
+# Install Heroku CLI
+# https://devcenter.heroku.com/articles/heroku-cli
+
+# Login
+heroku login
+
+# Create app
+heroku create your-app-name
+
+# Add PostgreSQL
+heroku addons:create heroku-postgresql:mini
+
+# Environment variables
+heroku config:set SECRET_KEY=your-secret-key
+
+# Deploy
+git push heroku main
+
+# Database migrate
+heroku run python -m backend.seed_data
 ```
 
-2. Use a production database (PostgreSQL recommended)
-3. Set environment variables for secrets
-4. Use HTTPS with a reverse proxy (nginx)
+#### Frontend Deployment (Vercel)
 
-### Frontend
-
-1. Build the production bundle:
 ```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
 cd frontend
-npm run build
+vercel
 ```
 
-2. Serve the `dist` folder with a static file server or CDN
+### Docker
 
-## Development Tips
+`Dockerfile` (Backend):
+```dockerfile
+FROM python:3.11-slim
 
-### Hot Reload
+WORKDIR /app
 
-Both backend (`--reload` flag) and frontend (`npm run dev`) support hot reload during development.
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-### API Testing
+COPY backend/ ./backend/
 
-Use the Swagger UI at http://localhost:8000/docs to test API endpoints interactively.
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
 
-### Database Reset
+`docker-compose.yml`:
+```yaml
+version: '3.8'
 
-To reset the database and reseed:
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:pass@db:5432/marketplace
+    depends_on:
+      - db
 
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: marketplace
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+
+Çalıştırma:
 ```bash
-# Delete the database file
-rm sql_app.db  # or del sql_app.db on Windows
+docker-compose up -d
+```
 
-# Reseed
+## Troubleshooting
+
+### Python Hataları
+
+**Problem**: `python: command not found`
+
+**Çözüm**:
+```bash
+# Python3 kullan (Linux/macOS)
+python3 --version
+python3 -m venv .venv
+```
+
+**Problem**: `pip: command not found`
+
+**Çözüm**:
+```bash
+# pip'i python module olarak çalıştır
+python -m pip install -r requirements.txt
+```
+
+### Node.js Hataları
+
+**Problem**: `npm: command not found`
+
+**Çözüm**: Node.js'i yeniden kurun ve PATH'e eklendiğinden emin olun
+
+**Problem**: `EACCES: permission denied`
+
+**Çözüm**:
+```bash
+# npm cache temizle
+npm cache clean --force
+
+# Veya sudo kullan (Linux/macOS)
+sudo npm install
+```
+
+### Virtual Environment Hataları
+
+**Problem**: PowerShell'de script çalıştırma hatası
+
+**Çözüm**:
+```powershell
+# Execution policy değiştir (Admin PowerShell)
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+### Database Hataları
+
+**Problem**: `no such table` hatası
+
+**Çözüm**:
+```bash
+# Veritabanını yeniden oluştur
 python -m backend.seed_data
 ```
 
+**Problem**: PostgreSQL connection error
+
+**Çözüm**:
+```bash
+# PostgreSQL servisini kontrol et
+sudo systemctl status postgresql  # Linux
+brew services list  # macOS
+
+# Başlat
+sudo systemctl start postgresql  # Linux
+brew services start postgresql  # macOS
+```
+
+### Port Hataları
+
+**Problem**: `Address already in use`
+
+**Çözüm**:
+
+**Windows**:
+```bash
+# Port 8000'i kullanan process'i bul
+netstat -ano | findstr :8000
+
+# Process'i kapat (PID'yi yukarıdan al)
+taskkill /PID <PID> /F
+```
+
+**Linux/macOS**:
+```bash
+# Port 8000'i kullanan process'i bul ve kapat
+lsof -ti:8000 | xargs kill -9
+```
+
+### CORS Hataları
+
+**Problem**: `CORS policy: No 'Access-Control-Allow-Origin' header`
+
+**Çözüm**: `backend/main.py`'de frontend URL'ini ekleyin:
+
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+### Import Hataları
+
+**Problem**: `ModuleNotFoundError: No module named 'backend'`
+
+**Çözüm**:
+```bash
+# Ana dizinden çalıştırın (backend klasörünün parent'ı)
+cd digital-game-marketplace
+
+# Python path'i kontrol edin
+python -c "import sys; print(sys.path)"
+```
+
+## Yardım ve Destek
+
+### Dokümantasyon
+
+- [API Reference](API_REFERENCE.md)
+- [Architecture](ARCHITECTURE.md)
+- [Testing](TESTING.md)
+- [User Guide](USER_GUIDE.md)
+
+### Community
+
+- **GitHub Issues**: [Sorun bildirin](https://github.com/dogukannparlak/Digital_Game_Marketplace/issues)
+- **Email**: support@marketplace.com
+- **Documentation**: http://localhost:8000/docs
+
+### Faydalı Komutlar
+
+```bash
+# Python versiyonu
+python --version
+
+# pip versiyonu
+pip --version
+
+# Node versiyonu
+node --version
+
+# npm versiyonu
+npm --version
+
+# Virtual environment aktif mi?
+where python  # Windows
+which python  # Linux/macOS
+
+# Yüklü paketler
+pip list
+npm list --depth=0
+
+# Port kontrolü
+netstat -an | findstr :8000  # Windows
+lsof -i :8000  # Linux/macOS
+```
+
+---
+
+✅ **Kurulum tamamlandı!** Artık projeyi kullanmaya başlayabilirsiniz.
+
+📖 Sonraki adım: [Kullanıcı Kılavuzu](USER_GUIDE.md)

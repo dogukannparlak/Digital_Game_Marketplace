@@ -1,4 +1,4 @@
-@startuml
+@startuml US-17
 hide circle
 skinparam classAttributeIconSize 0
 title US-17: User Banning

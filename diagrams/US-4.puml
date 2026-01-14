@@ -1,0 +1,24 @@
+@startuml US-04
+title US-04 View Game Details
+
+actor User
+boundary "Web UI" as UI
+control "GameController" as GC
+control "GameService" as GS
+database "GameRepository" as GR
+database "DeveloperRepository" as DR
+database "GenreRepository" as GeR
+
+User -> UI: Click game title
+UI -> GC: GET /games/{id}
+GC -> GS: getGameDetails(id)
+GS -> GR: findById(id)
+GR --> GS: game
+GS -> DR: findById(game.developerId)
+DR --> GS: developer
+GS -> GeR: findGenresByGameId(id)
+GeR --> GS: genres
+GS --> GC: details(title, desc, price, releaseDate, developerName, genres)
+GC --> UI: 200 OK + details
+UI --> User: Show details page
+@enduml

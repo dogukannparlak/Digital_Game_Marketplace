@@ -1,0 +1,37 @@
+@startuml US-06
+title US-06 Purchase a Single Game
+
+actor User
+boundary "Web UI" as UI
+control "OrderController" as OC
+control "OrderService" as OS
+database "GameRepository" as GR
+database "OrderRepository" as OR
+database "OrderItemRepository" as OIR
+
+User -> UI: Click "Buy Now"
+UI -> OC: POST /orders {userId, gameId}
+OC -> OS: purchaseSingle(userId, gameId)
+
+OS -> GR: findById(gameId)
+GR --> OS: game(price)
+
+' Optional business rule (mentioned as optional task)
+OS -> OR: userAlreadyOwnsGame?(userId, gameId)
+OR --> OS: yes/no
+
+alt user does NOT own game
+  OS -> OS: totalAmount = game.price
+  OS -> OR: save(Order{userId, orderDate=now, totalAmount})
+  OR --> OS: orderId
+  OS -> OIR: save(OrderItem{orderId, gameId, purchasePrice=game.price})
+  OIR --> OS: ok
+  OS --> OC: success(orderId)
+  OC --> UI: 201 Created
+  UI --> User: Show success + receipt
+else already owns
+  OS --> OC: error(already owned)
+  OC --> UI: 409 Conflict
+  UI --> User: Show warning
+end
+@enduml

@@ -1,0 +1,28 @@
+@startuml US-11
+title US-11 Update Game Price
+
+actor Developer
+boundary "Dev Portal UI" as UI
+control "GameController" as GC
+control "GameService" as GS
+database "GameRepository" as GR
+
+Developer -> UI: Edit price and save
+UI -> GC: PATCH /games/{id} {price}
+GC -> GS: updatePrice(devId, gameId, newPrice)
+
+GS -> GR: findById(gameId)
+GR --> GS: game(ownerDevId)
+
+alt developer owns game
+  GS -> GR: updatePrice(gameId, newPrice)
+  GR --> GS: ok
+  GS --> GC: success
+  GC --> UI: 200 OK
+  UI --> Developer: Show updated price
+else not owner
+  GS --> GC: error(forbidden)
+  GC --> UI: 403 Forbidden
+  UI --> Developer: Show error
+end
+@enduml

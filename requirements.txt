@@ -20,7 +20,9 @@ bcrypt>=4.1.0
 # Form Data Handling
 python-multipart>=0.0.6
 
-# Development (optional)
-# pytest>=8.0.0
-# httpx>=0.26.0
-
+# Testing
+pytest>=8.0.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.23.0
+httpx>=0.26.0
+pytest-mock>=3.12.0

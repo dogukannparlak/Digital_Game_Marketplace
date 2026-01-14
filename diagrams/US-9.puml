@@ -1,0 +1,18 @@
+@startuml US-09
+title US-09 Developer Registration
+
+actor Developer
+boundary "Admin/Dev UI" as UI
+control "DeveloperController" as DC
+control "DeveloperService" as DS
+database "DeveloperRepository" as DR
+
+Developer -> UI: Enter developer name
+UI -> DC: POST /developers {name}
+DC -> DS: registerDeveloper(name)
+DS -> DR: save(Developer{name})
+DR --> DS: developerId
+DS --> DC: success(developerId)
+DC --> UI: 201 Created
+UI --> Developer: Confirmation
+@enduml

@@ -1,0 +1,37 @@
+@startuml US-13
+title US-13 Multi-Game Checkout (Cart)
+
+actor User
+boundary "Web UI" as UI
+control "CartController" as CC
+control "OrderService" as OS
+database "GameRepository" as GR
+database "OrderRepository" as OR
+database "OrderItemRepository" as OIR
+
+User -> UI: Add 2 games to cart
+User -> UI: Checkout
+UI -> CC: POST /checkout {userId, gameIds[]}
+CC -> OS: checkoutCart(userId, gameIds)
+
+OS -> OS: total = 0
+loop each gameId
+  OS -> GR: findById(gameId)
+  GR --> OS: game(price)
+  OS -> OS: total += price
+end
+
+OS -> OR: save(Order{userId, orderDate=now, totalAmount=total})
+OR --> OS: orderId
+
+loop each gameId
+  OS -> GR: findById(gameId)
+  GR --> OS: game(price)
+  OS -> OIR: save(OrderItem{orderId, gameId, purchasePrice=price})
+  OIR --> OS: ok
+end
+
+OS --> CC: success(orderId, total)
+CC --> UI: 201 Created
+UI --> User: Show receipt
+@enduml

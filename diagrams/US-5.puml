@@ -1,0 +1,18 @@
+@startuml US-05
+title US-05 Filter Games by Genre
+
+actor User
+boundary "Web UI" as UI
+control "GameController" as GC
+control "GameService" as GS
+database "GameRepository" as GR
+
+User -> UI: Select genre "RPG"
+UI -> GC: GET /games?genre=RPG
+GC -> GS: listGamesByGenre("RPG")
+GS -> GR: findByGenreName("RPG")
+GR --> GS: games
+GS --> GC: games
+GC --> UI: 200 OK + filtered list
+UI --> User: Render only RPG games
+@enduml

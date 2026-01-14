@@ -1,0 +1,18 @@
+@startuml US-15
+title US-15 Admin Dashboard (System Stats)
+
+actor Admin
+boundary "Admin UI" as UI
+control "AdminController" as ADC
+control "StatsService" as SS
+database "OrderRepository" as OR
+
+Admin -> UI: Open dashboard
+UI -> ADC: GET /admin/stats
+ADC -> SS: getTotalSales()
+SS -> OR: sumTotalAmountAllOrders()
+OR --> SS: totalSales
+SS --> ADC: totalSales
+ADC --> UI: 200 OK + totalSales
+UI --> Admin: Display total sales
+@enduml

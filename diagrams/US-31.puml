@@ -1,4 +1,4 @@
-@startuml
+@startuml US-31
 hide circle
 skinparam classAttributeIconSize 0
 title US-31: Change Password

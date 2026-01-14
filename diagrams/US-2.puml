@@ -1,0 +1,27 @@
+@startuml US-02
+title US-02 User Login
+
+actor User
+boundary "Web UI" as UI
+control "AuthController" as AC
+control "AuthService" as AS
+database "UserRepository" as UR
+
+User -> UI: Open Login Page
+User -> UI: Submit(username/email, password)
+UI -> AC: POST /login
+AC -> AS: authenticate(cred, password)
+AS -> UR: findByCred(cred)
+UR --> AS: user or null
+
+alt user found & password ok
+  AS -> AS: verifyHash(password)
+  AS --> AC: success + session token
+  AC --> UI: 200 OK
+  UI --> User: Redirect to Home
+else fail
+  AS --> AC: error(invalid credentials)
+  AC --> UI: 401 Unauthorized
+  UI --> User: Show error
+end
+@enduml

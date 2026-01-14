@@ -1,36 +1,133 @@
-# Digital Game Marketplace - Documentation
+# 📚 Digital Game Marketplace - Dokümantasyon
 
-Welcome to the Digital Game Marketplace documentation. This folder contains comprehensive guides and references for the project.
+Hoş geldiniz! Bu klasör, Digital Game Marketplace projesinin kapsamlı dokümantasyonunu içerir.
 
-## 📖 Table of Contents
+## 📖 Dokümantasyon İndeksi
 
-| Document | Description |
-|----------|-------------|
-| [INSTALLATION.md](./INSTALLATION.md) | Step-by-step installation and setup guide |
-| [API_REFERENCE.md](./API_REFERENCE.md) | Complete API endpoint documentation |
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | System architecture and design decisions |
-| [USER_GUIDE.md](./USER_GUIDE.md) | User workflows and feature guide |
-| [TESTING.md](./TESTING.md) | Testing strategies and instructions |
-| [CONTRIBUTING.md](./CONTRIBUTING.md) | Guidelines for contributors |
-| [CHANGELOG.md](./CHANGELOG.md) | Version history and release notes |
+### 🚀 Başlangıç
 
-## 🎯 Quick Navigation
+1. **[INSTALLATION.md](INSTALLATION.md)** - Kurulum Rehberi
 
-### Getting Started
-1. Read [INSTALLATION.md](./INSTALLATION.md) for setup instructions
-2. Check [USER_GUIDE.md](./USER_GUIDE.md) for test accounts and basic usage
+   - Sistem gereksinimleri
+   - Adım adım kurulum
+   - Veritabanı kurulumu
+   - Troubleshooting
 
-### For Developers
-1. Review [ARCHITECTURE.md](./ARCHITECTURE.md) for system design
-2. Use [API_REFERENCE.md](./API_REFERENCE.md) for API integration
-3. Read [CONTRIBUTING.md](./CONTRIBUTING.md) before making changes
-4. Check [TESTING.md](./TESTING.md) for quality assurance
+### 🛠️ Geliştirici Dokümantasyonu
 
-## 📊 Diagrams
+3. **[ARCHITECTURE.md](ARCHITECTURE.md)** - Mimari Tasarım
 
-The project includes PlantUML diagrams in the `/diagrams` folder:
-- **US-16 to US-39**: User story diagrams covering all major features
-- Domain models and workflow diagrams
+   - Sistem mimarisi
+   - Veritabanı şeması
+   - API tasarımı
+   - Güvenlik mimarisi
+4. **[API_REFERENCE.md](API_REFERENCE.md)** - API Referansı
 
-To view diagrams, use a PlantUML viewer or IDE extension.
+   - Tüm endpoint'ler
+   - Request/Response şemaları
+   - Örnek kodlar
+   - Error handling
+5. **[TESTING.md](TESTING.md)** - Test Dokümantasyonu
 
+   - Test stratejisi
+   - Test yazma rehberi
+   - Coverage raporu
+   - CI/CD entegrasyonu
+
+### 🤝 Katkı ve İşbirliği
+
+6. **[CONTRIBUTING.md](CONTRIBUTING.md)** - Katkıda Bulunma Rehberi
+
+   - Kod standartları
+   - Git workflow
+   - Pull request süreci
+   - Code review kuralları
+7. **[CHANGELOG.md](CHANGELOG.md)** - Değişiklik Günlüğü
+
+   - Sürüm notları
+   - Yeni özellikler
+   - Bug fix'ler
+   - Breaking changes
+
+## 🎯 Hızlı Bağlantılar
+
+### Yeni Başlayanlar İçin
+
+1. [Kurulum](INSTALLATION.md) → Sistemi kurun
+2. [Kullanıcı Kılavuzu](USER_GUIDE.md) → Temel özellikleri öğrenin
+3. [API Referansı](API_REFERENCE.md) → API'yi keşfedin
+
+### Geliştiriciler İçin
+
+1. [Mimari](ARCHITECTURE.md) → Sistem tasarımını anlayın
+2. [Test](TESTING.md) → Test yazın
+3. [Katkıda Bulunma](CONTRIBUTING.md) → Katkıda bulunun
+
+### Admin ve DevOps İçin
+
+1. [Kurulum](INSTALLATION.md#production-deployment) → Production kurulumu
+2. [Mimari](ARCHITECTURE.md#scalability) → Ölçeklendirme stratejileri
+3. [Test](TESTING.md#ci-cd) → CI/CD pipeline
+
+## 📚 Ek Kaynaklar
+
+### Dış Dokümantasyonlar
+
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [React Documentation](https://react.dev/)
+- [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
+- [Pydantic Documentation](https://docs.pydantic.dev/)
+
+### Proje Dosyaları
+
+- [../README.md](../README.md) - Ana proje README'si
+- [../requirements.txt](../requirements.txt) - Python bağımlılıkları
+- [../frontend/package.json](../frontend/package.json) - JavaScript bağımlılıkları
+- [../diagrams/](../diagrams/) - PlantUML diyagramları
+
+## 🔄 Dokümantasyon Güncellemeleri
+
+Bu dokümantasyon düzenli olarak güncellenmektedir. Son güncelleme: **14 Ocak 2026**
+
+### Güncellenecek Konular
+
+- [ ] Deployment rehberi
+- [ ] Performance optimization
+- [ ] Security best practices
+- [ ] Advanced features
+
+## 💡 Öneriler ve Geri Bildirim
+
+Dokümantasyonda eksiklik veya hata bulursanız:
+
+1. [GitHub Issues](https://github.com/dogukannparlak/Digital_Game_Marketplace/issues) açın
+2. Pull request gönderin
+3. Email gönderin: docs@marketplace.com
+
+## 📝 Dokümantasyon Yazma Kuralları
+
+1. **Markdown kullanın** - Tüm dosyalar .md formatında
+2. **Başlıklar** - Net ve açıklayıcı
+3. **Kod örnekleri** - Her özellik için örnek ekleyin
+4. **Ekran görüntüleri** - Gerekirse görsel ekleyin
+5. **Güncel tutun** - Her değişiklikle birlikte güncelleyin
+
+## 🏗️ Dokümantasyon Yapısı
+
+```
+docs/
+├── README.md              # Bu dosya - İndeks
+├── INSTALLATION.md        # Kurulum rehberi
+├── USER_GUIDE.md         # Kullanıcı kılavuzu
+├── ARCHITECTURE.md       # Mimari tasarım
+├── API_REFERENCE.md      # API dokümantasyonu
+├── TESTING.md            # Test dokümantasyonu
+├── CONTRIBUTING.md       # Katkıda bulunma rehberi
+└── CHANGELOG.md          # Değişiklik günlüğü
+```
+
+---
+
+📖 **İyi okumalar!**
+
+Herhangi bir sorunuz varsa [support@marketplace.com](mailto:support@marketplace.com) adresinden bize ulaşabilirsiniz.

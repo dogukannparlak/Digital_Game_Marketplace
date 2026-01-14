@@ -1,4 +1,4 @@
-@startuml
+@startuml US-29
 hide circle
 skinparam classAttributeIconSize 0
 title US-29: Game Media Management

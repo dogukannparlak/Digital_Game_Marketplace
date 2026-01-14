@@ -1,4 +1,4 @@
-@startuml
+@startuml US-22
 hide circle
 skinparam classAttributeIconSize 0
 title US-22: View / Edit Cart

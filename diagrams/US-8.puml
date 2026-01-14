@@ -1,0 +1,26 @@
+@startuml US-08
+title US-08 View Order Details
+
+actor User
+boundary "Web UI" as UI
+control "OrderController" as OC
+control "OrderService" as OS
+database "OrderItemRepository" as OIR
+database "GameRepository" as GR
+
+User -> UI: Click Order ID
+UI -> OC: GET /orders/{orderId}
+OC -> OS: getOrderDetails(orderId)
+
+OS -> OIR: findByOrderId(orderId)
+OIR --> OS: items(gameId, purchasePrice)
+
+loop for each item
+  OS -> GR: findById(gameId)
+  GR --> OS: gameTitle
+end
+
+OS --> OC: items(gameTitle, purchasePrice)
+OC --> UI: 200 OK + details
+UI --> User: Render order items
+@enduml

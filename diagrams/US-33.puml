@@ -1,4 +1,4 @@
-@startuml
+@startuml US-33
 hide circle
 skinparam classAttributeIconSize 0
 title US-33: Public User Profile

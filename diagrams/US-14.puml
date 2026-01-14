@@ -1,0 +1,18 @@
+@startuml US-14
+title US-14 View Games by Developer
+
+actor User
+boundary "Web UI" as UI
+control "DeveloperController" as DC
+control "DeveloperService" as DS
+database "GameRepository" as GR
+
+User -> UI: Click developer name
+UI -> DC: GET /developers/{developerId}/games
+DC -> DS: listGamesByDeveloper(developerId)
+DS -> GR: findByDeveloperId(developerId)
+GR --> DS: games
+DS --> DC: games
+DC --> UI: 200 OK + list
+UI --> User: Render developer's games
+@enduml

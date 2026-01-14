@@ -1,0 +1,31 @@
+@startuml US-01
+title US-01 User Registration
+
+actor Visitor
+boundary "Web UI" as UI
+control "AuthController" as AC
+control "AuthService" as AS
+database "UserRepository" as UR
+
+Visitor -> UI: Open Registration Page
+Visitor -> UI: Submit(email, username, password)
+UI -> AC: POST /register
+AC -> AS: register(email, username, password)
+AS -> UR: existsByEmail(email)?
+UR --> AS: yes/no
+AS -> UR: existsByUsername(username)?
+UR --> AS: yes/no
+
+alt unique email & username
+  AS -> AS: hash(password)
+  AS -> UR: save(User{email,username,hash,registrationDate=now})
+  UR --> AS: userId
+  AS --> AC: success + session token
+  AC --> UI: 201 Created + auto-login
+  UI --> Visitor: Redirect to Home
+else conflict
+  AS --> AC: error(duplicate)
+  AC --> UI: 409 Conflict
+  UI --> Visitor: Show validation error
+end
+@enduml

@@ -1,0 +1,29 @@
+@startuml US-10
+title US-10 Publish New Game
+
+actor Developer
+boundary "Dev Portal UI" as UI
+control "GameController" as GC
+control "GameService" as GS
+database "GameRepository" as GR
+database "GenreRepository" as GeR
+database "GameGenreLinkRepo" as GGL
+
+Developer -> UI: Fill game form(title, desc, price, genres)
+UI -> GC: POST /games
+GC -> GS: publishGame(devId, payload)
+
+GS -> GR: save(Game{devId,title,desc,price})
+GR --> GS: gameId
+
+loop for each genre in payload
+  GS -> GeR: findOrCreate(genre)
+  GeR --> GS: genreId
+  GS -> GGL: link(gameId, genreId)
+  GGL --> GS: ok
+end
+
+GS --> GC: success(gameId)
+GC --> UI: 201 Created
+UI --> Developer: Show published game
+@enduml

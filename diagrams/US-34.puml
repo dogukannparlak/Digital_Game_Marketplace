@@ -1,4 +1,4 @@
-@startuml
+@startuml US-34
 hide circle
 skinparam classAttributeIconSize 0
 title US-34: Price Range Filtering
