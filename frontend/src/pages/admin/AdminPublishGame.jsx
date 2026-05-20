@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
-
-const API_URL = 'http://localhost:8000';
+import { API_URL } from '../../config';
 
 export default function AdminPublishGame() {
   const [developers, setDevelopers] = useState([]);

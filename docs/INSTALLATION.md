@@ -280,9 +280,9 @@ python -m backend.seed_data
 This command:
 1. Creates database tables
 2. Adds sample users:
-   - Admin: `admin@marketplace.com` / `admin123`
-   - Developer: `dev@marketplace.com` / `dev123`
-   - User: `user@marketplace.com` / `user123`
+   - Admin: `admin` / `admin123`
+   - Player: `player` / `player123`
+   - Developer (example): `rockstar_games` / `dev123`
 3. Adds sample games
 4. Adds sample categories
 
@@ -676,7 +676,7 @@ python -c "import sys; print(sys.path)"
 ### Community
 
 - **GitHub Issues**: [Sorun bildirin](https://github.com/dogukannparlak/Digital_Game_Marketplace/issues)
-- **Email**: support@marketplace.com
+- **Issues**: [GitHub Issues](https://github.com/dogukannparlak/Digital_Game_Marketplace/issues)
 - **Documentation**: http://localhost:8000/docs
 
 ### Faydalı Komutlar

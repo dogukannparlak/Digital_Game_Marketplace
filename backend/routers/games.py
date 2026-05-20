@@ -49,36 +49,6 @@ def read_games(
 
     return query.order_by(models.Game.release_date.desc()).offset(skip).limit(limit).all()
 
-@router.get("/{game_id}", response_model=schemas.GamePublic)
-def read_game(game_id: int, db: Session = Depends(get_db)):
-    """Get a single game by ID (only if approved)"""
-    game = db.query(models.Game).filter(
-        models.Game.id == game_id,
-        models.Game.status == models.GameStatus.APPROVED
-    ).first()
-
-    if game is None:
-        raise HTTPException(status_code=404, detail="Game not found")
-    return game
-
-@router.get("/{game_id}/reviews", response_model=List[schemas.Review])
-def get_game_reviews(
-    game_id: int,
-    skip: int = 0,
-    limit: int = 50,
-    db: Session = Depends(get_db)
-):
-    """Get reviews for a game"""
-    game = db.query(models.Game).filter(models.Game.id == game_id).first()
-    if not game:
-        raise HTTPException(status_code=404, detail="Game not found")
-
-    reviews = db.query(models.Review).filter(
-        models.Review.game_id == game_id
-    ).order_by(models.Review.created_at.desc()).offset(skip).limit(limit).all()
-
-    return reviews
-
 # ==================== DEVELOPER ENDPOINTS ====================
 
 @router.get("/developer/my-games", response_model=List[schemas.Game])
@@ -127,6 +97,36 @@ def get_developer_stats(
         "total_sales": total_sales,
         "total_revenue": total_revenue
     }
+
+@router.get("/{game_id}", response_model=schemas.GamePublic)
+def read_game(game_id: int, db: Session = Depends(get_db)):
+    """Get a single game by ID (only if approved)"""
+    game = db.query(models.Game).filter(
+        models.Game.id == game_id,
+        models.Game.status == models.GameStatus.APPROVED
+    ).first()
+
+    if game is None:
+        raise HTTPException(status_code=404, detail="Game not found")
+    return game
+
+@router.get("/{game_id}/reviews", response_model=List[schemas.Review])
+def get_game_reviews(
+    game_id: int,
+    skip: int = 0,
+    limit: int = 50,
+    db: Session = Depends(get_db)
+):
+    """Get reviews for a game"""
+    game = db.query(models.Game).filter(models.Game.id == game_id).first()
+    if not game:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    reviews = db.query(models.Review).filter(
+        models.Review.game_id == game_id
+    ).order_by(models.Review.created_at.desc()).offset(skip).limit(limit).all()
+
+    return reviews
 
 @router.post("/", response_model=schemas.Game)
 def create_game(

@@ -1,0 +1,16 @@
+@startuml profile-update
+hide circle
+skinparam classAttributeIconSize 0
+title Profile Update
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+@enduml

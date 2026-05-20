@@ -83,7 +83,7 @@ Hoş geldiniz! Bu klasör, Digital Game Marketplace projesinin kapsamlı doküma
 - [../README.md](../README.md) - Ana proje README'si
 - [../requirements.txt](../requirements.txt) - Python bağımlılıkları
 - [../frontend/package.json](../frontend/package.json) - JavaScript bağımlılıkları
-- [../diagrams/](../diagrams/) - PlantUML diyagramları
+- [diagrams/](diagrams/) - PlantUML sequence diyagramları
 
 ## 🔄 Dokümantasyon Güncellemeleri
 
@@ -102,7 +102,7 @@ Dokümantasyonda eksiklik veya hata bulursanız:
 
 1. [GitHub Issues](https://github.com/dogukannparlak/Digital_Game_Marketplace/issues) açın
 2. Pull request gönderin
-3. Email gönderin: docs@marketplace.com
+3. [GitHub Issues](https://github.com/dogukannparlak/Digital_Game_Marketplace/issues) üzerinden bildirin
 
 ## 📝 Dokümantasyon Yazma Kuralları
 
@@ -123,11 +123,12 @@ docs/
 ├── API_REFERENCE.md      # API dokümantasyonu
 ├── TESTING.md            # Test dokümantasyonu
 ├── CONTRIBUTING.md       # Katkıda bulunma rehberi
-└── CHANGELOG.md          # Değişiklik günlüğü
+├── CHANGELOG.md          # Değişiklik günlüğü
+└── diagrams/             # PlantUML sequence diyagramları
 ```
 
 ---
 
 📖 **İyi okumalar!**
 
-Herhangi bir sorunuz varsa [support@marketplace.com](mailto:support@marketplace.com) adresinden bize ulaşabilirsiniz.
+Sorularınız için [GitHub Issues](https://github.com/dogukannparlak/Digital_Game_Marketplace/issues) kullanın.

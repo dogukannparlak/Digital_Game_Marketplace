@@ -1,12 +1,7 @@
 """
-Unit Tests for View/Get Developer Games Functionality
+Unit tests for listing games by developer.
 
-Tests cover:
-1. developerId ile sadece o developer'ın oyunları döner
-2. developerId geçersiz/null → beklenen davranış
-3. sonuç boş liste olabilir → doğrulama
-
-Service Layer: GameViewService (100% mocked repository)
+Tests cover filtering by developer ID, validation, and empty results.
 """
 
 import pytest
@@ -800,64 +795,3 @@ class TestGetDeveloperGames_DataIntegrity:
         assert len(dev1_ids & dev2_ids) == 0
         assert len(dev1_ids & dev3_ids) == 0
         assert len(dev2_ids & dev3_ids) == 0
-
-
-# ==================== SUMMARY ====================
-
-"""
-TEST COVERAGE SUMMARY:
-
-Valid Developer (7 tests):
-  ✅ Developer 1 returns all games (5 games)
-  ✅ Developer 1 excludes other developers
-  ✅ Developer 2 returns correct games (3 games)
-  ✅ Developer 3 returns single game
-  ✅ Games sorted by release_date descending
-  ✅ All statuses included
-  ✅ Repository called
-
-Invalid Developer (6 tests):
-  ✅ None developer_id raises ValueError
-  ✅ Negative developer_id raises ValueError
-  ✅ Zero developer_id raises ValueError
-  ✅ String developer_id raises ValueError
-  ✅ Float developer_id raises ValueError
-  ✅ Invalid input doesn't query repository
-
-Empty Result (3 tests):
-  ✅ Non-existent developer returns empty list
-  ✅ Empty list is mutable
-  ✅ Validation happens for non-existent developers
-
-Filter by Status (6 tests):
-  ✅ Filter APPROVED games
-  ✅ Filter PENDING games
-  ✅ Filter REJECTED games
-  ✅ Non-existent status returns empty
-  ✅ Invalid status raises error
-  ✅ No status filter returns all
-
-Game Count (4 tests):
-  ✅ Count developer 1 games
-  ✅ Count developer 2 games
-  ✅ Count developer 3 games
-  ✅ Non-existent developer count is 0
-
-Approved Games (3 tests):
-  ✅ Get approved games for developer
-  ✅ Approved games sorted
-  ✅ No approved games returns empty
-
-Edge Cases (3 tests):
-  ✅ Large developer_id
-  ✅ Multiple calls consistent results
-  ✅ Repository called once per request
-  ✅ Result is list not generator
-
-Data Integrity (3 tests):
-  ✅ Game data preserved
-  ✅ Filtering doesn't modify original
-  ✅ Developers have distinct games
-
-TOTAL: 38 comprehensive test cases
-"""

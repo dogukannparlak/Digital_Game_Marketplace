@@ -113,17 +113,17 @@ export default function Login() {
               </button>
               <button
                 type="button"
-                onClick={() => { setUsername('developer'); setPassword('dev123'); }}
+                onClick={() => { setUsername('rockstar_games'); setPassword('dev123'); }}
                 className="glass-btn glass-btn-sm"
               >
                 Developer
               </button>
               <button
                 type="button"
-                onClick={() => { setUsername('user'); setPassword('user123'); }}
+                onClick={() => { setUsername('player'); setPassword('player123'); }}
                 className="glass-btn glass-btn-sm"
               >
-                User
+                Player
               </button>
             </div>
           </div>

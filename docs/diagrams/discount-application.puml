@@ -1,0 +1,14 @@
+@startuml discount-application
+hide circle
+skinparam classAttributeIconSize 0
+title Discount Application
+class Game {
+  +gameId: UUID
+  +title: string
+  +price: decimal
+  +discountPercent: int
+  +status: GameStatus
+  +rejectionReason: string
+}
+
+@enduml

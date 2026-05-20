@@ -1,14 +1,7 @@
 """
-Unit Tests for Game Search and Genre Filter Functionality
+Unit tests for game search and genre filter functionality.
 
-Tests cover:
-1. Search by game name (case-insensitive)
-2. Empty/null query handling
-3. Filter by genre
-4. Invalid/null genre handling
-5. Edge cases and combinations
-
-Service Layer: GameSearchService (100% mocked repository)
+Tests cover search by title, genre filtering, combined filters, and edge cases.
 """
 
 import pytest
@@ -858,56 +851,3 @@ class TestRepositoryInteraction:
         # Act & Assert - Second search gets new data
         results2 = game_search_service.search_games_by_name("")
         assert len(results2) == 3
-
-
-# ==================== SUMMARY ====================
-
-"""
-TEST COVERAGE SUMMARY:
-
-Search Functionality (11 tests):
-  ✅ Exact match
-  ✅ Case-insensitive (lowercase, uppercase, mixed case)
-  ✅ Partial match
-  ✅ Multiple results
-  ✅ Empty/null query returns all approved games
-  ✅ Whitespace-only query
-  ✅ No matches returns empty
-  ✅ Excludes pending games by default
-  ✅ Includes pending when requested
-  ✅ Invalid query type raises error
-  ✅ Special characters
-
-Filter Functionality (11 tests):
-  ✅ Filter by RPG genre
-  ✅ Filter by Action genre
-  ✅ Filter by Indie genre
-  ✅ Case-insensitive genre matching
-  ✅ Invalid genre returns empty
-  ✅ Empty/null genre returns all approved games
-  ✅ Whitespace-only genre
-  ✅ Excludes pending games by default
-  ✅ Includes pending when requested
-  ✅ Invalid genre type raises error
-  ✅ Filter by Simulation genre
-
-Combined Operations (4 tests):
-  ✅ Search + Genre filter
-  ✅ Genre + Price filter
-  ✅ Budget game search
-  ✅ Multiple criteria no match
-
-Edge Cases (5 tests):
-  ✅ Repository called once
-  ✅ Unicode character handling
-  ✅ Empty games list
-  ✅ All games with pending status
-  ✅ Games with multiple genres
-
-Repository Interaction (3 tests):
-  ✅ Repository is called
-  ✅ Results have correct structure
-  ✅ Multiple searches use fresh data
-
-TOTAL: 34 comprehensive test cases
-"""

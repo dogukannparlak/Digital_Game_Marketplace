@@ -184,7 +184,7 @@ def list_developers(
     db: Session = Depends(get_db),
     admin: models.User = Depends(require_admin)
 ):
-    """List all developers for game assignment"""
+    """List all developers for game management"""
     developers = db.query(models.User).filter(
         models.User.role.in_([models.UserRole.DEVELOPER, models.UserRole.ADMIN])
     ).all()

@@ -1,12 +1,7 @@
 """
-Unit Tests for Purchase Service (Service Layer)
-Purchase/BuyNow functionality with repository mocking
+Unit tests for purchase flow with mocked repositories.
 
-Follows:
-- Service layer testing pattern
-- Arrange-Act-Assert structure
-- Repository/dependency mocking
-- Zero database/network access
+Uses Arrange-Act-Assert structure and dependency mocking (no database/network).
 """
 
 import pytest
@@ -308,7 +303,7 @@ class TestPurchaseServiceBasics:
     """Basic purchase service tests"""
 
     def test_purchase_single_game_success(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """✅ Positive: Purchase single approved game successfully"""
+        """Purchase single approved game successfully"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -342,7 +337,7 @@ class TestPurchaseServiceBasics:
         mock_game_repo.update_stats.assert_called_once()
 
     def test_purchase_multiple_games_success(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """✅ Positive: Purchase multiple games with correct total"""
+        """Purchase multiple games with correct total"""
         # Arrange
         user_id = 1
         game_ids = [1, 2, 3]
@@ -375,7 +370,7 @@ class TestPurchaseServiceValidation:
     """Validation and error handling tests"""
 
     def test_user_not_found(self, order_service, mock_user_repo):
-        """❌ Negative: User not found returns 404"""
+        """User not found returns 404"""
         # Arrange
         user_id = 999
         mock_user_repo.get_user.return_value = None
@@ -388,7 +383,7 @@ class TestPurchaseServiceValidation:
         assert "not found" in exc_info.value.detail.lower()
 
     def test_user_banned_cannot_purchase(self, order_service, mock_user_repo):
-        """❌ Negative: Banned user cannot purchase"""
+        """Banned user cannot purchase"""
         # Arrange
         user_id = 2
         user = UserBuilder.banned_user(user_id=user_id)
@@ -402,7 +397,7 @@ class TestPurchaseServiceValidation:
         assert "banned" in exc_info.value.detail.lower()
 
     def test_game_not_found(self, order_service, mock_game_repo, mock_user_repo):
-        """❌ Negative: Game not found returns 404"""
+        """Game not found returns 404"""
         # Arrange
         user_id = 1
         game_id = 999
@@ -419,7 +414,7 @@ class TestPurchaseServiceValidation:
         assert f"Game {game_id}" in exc_info.value.detail
 
     def test_game_not_approved(self, order_service, mock_game_repo, mock_user_repo):
-        """❌ Negative: Unapproved game cannot be purchased"""
+        """Unapproved game cannot be purchased"""
         # Arrange
         user_id = 1
         game_id = 2
@@ -437,7 +432,7 @@ class TestPurchaseServiceValidation:
         assert "not available" in exc_info.value.detail.lower()
 
     def test_duplicate_games_rejected(self, order_service, mock_user_repo):
-        """❌ Negative: Duplicate games in purchase rejected"""
+        """Duplicate games in purchase rejected"""
         # Arrange
         user_id = 1
         game_ids = [1, 2, 1]  # Game 1 appears twice
@@ -452,7 +447,7 @@ class TestPurchaseServiceValidation:
         assert "duplicate" in str(exc_info.value).lower()
 
     def test_empty_game_list_rejected(self, order_service, mock_user_repo):
-        """❌ Negative: Empty game list rejected"""
+        """Empty game list rejected"""
         # Arrange
         user_id = 1
         mock_user_repo.get_user.return_value = UserBuilder.active_user(user_id=user_id)
@@ -464,7 +459,7 @@ class TestPurchaseServiceValidation:
         assert "empty" in str(exc_info.value).lower()
 
     def test_already_owned_game_rejected(self, order_service, mock_game_repo, mock_user_repo, mock_order_repo):
-        """❌ Negative: Already owned game cannot be purchased again"""
+        """Already owned game cannot be purchased again"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -488,7 +483,7 @@ class TestPurchaseServicePricing:
     """Price calculation and edge case tests"""
 
     def test_price_without_discount(self, order_service, mock_game_repo, mock_user_repo, mock_order_repo):
-        """✅ Positive: Price calculation without discount"""
+        """Price calculation without discount"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -507,7 +502,7 @@ class TestPurchaseServicePricing:
         assert result["total_amount"] == 100.00
 
     def test_price_with_discount(self, order_service, mock_game_repo, mock_user_repo, mock_order_repo):
-        """✅ Positive: Price calculation with discount"""
+        """Price calculation with discount"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -526,7 +521,7 @@ class TestPurchaseServicePricing:
         assert result["total_amount"] == 75.00
 
     def test_price_high_discount(self, order_service, mock_game_repo, mock_user_repo, mock_order_repo):
-        """✅ Positive: High discount percentage calculation"""
+        """High discount percentage calculation"""
         # Arrange
         user_id = 1
         game_id = 3
@@ -545,7 +540,7 @@ class TestPurchaseServicePricing:
         assert result["total_amount"] == 25.00  # Rounded to 2 decimals
 
     def test_price_precision_rounding(self, order_service, mock_game_repo, mock_user_repo, mock_order_repo):
-        """⚠️ Edge Case: Floating point precision with rounding"""
+        """Floating point precision with rounding."""
         # Arrange
         user_id = 1
         game_id = 1
@@ -566,7 +561,7 @@ class TestPurchaseServicePricing:
         assert len(str(result["total_amount"]).split(".")[-1]) <= 2
 
     def test_zero_price_game(self, order_service, mock_game_repo, mock_user_repo, mock_order_repo):
-        """✅ Edge Case: Free game (0 price) allowed"""
+        """Free game (0 price) allowed"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -586,7 +581,7 @@ class TestPurchaseServicePricing:
         assert result["items_count"] == 1
 
     def test_negative_price_rejected(self, order_service, mock_game_repo, mock_user_repo):
-        """❌ Edge Case: Negative price game rejected"""
+        """Negative price game rejected"""
         # Arrange
         user_id = 1
         game_id = 4
@@ -608,7 +603,7 @@ class TestPurchaseServiceRepositoryInteraction:
     """Repository call and interaction tests"""
 
     def test_repository_calls_sequence(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """✅ Verify: Correct sequence of repository calls"""
+        """Correct sequence of repository calls"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -632,7 +627,7 @@ class TestPurchaseServiceRepositoryInteraction:
         assert mock_game_repo.update_stats.call_count == 1
 
     def test_game_stats_updated_correctly(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """✅ Verify: Game stats updated with correct values"""
+        """Game stats updated with correct values"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -654,7 +649,7 @@ class TestPurchaseServiceRepositoryInteraction:
         assert call_args[1]["add_revenue"] == 26.99  # Discounted price
 
     def test_order_item_contains_correct_data(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """✅ Verify: Order item created with correct discount and price"""
+        """Order item created with correct discount and price"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -681,7 +676,7 @@ class TestPurchaseServiceIntegration:
     """Integration-style tests (still fully mocked)"""
 
     def test_complete_purchase_flow(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """✅ Integration: Complete purchase flow from validation to stats update"""
+        """Complete purchase flow from validation to stats update"""
         # Arrange
         user_id = 1
         game_ids = [1, 2]
@@ -712,7 +707,7 @@ class TestPurchaseServiceIntegration:
         assert mock_game_repo.update_stats.call_count == 2
 
     def test_purchase_with_mixed_game_states(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """❌ Integration: First game valid, second game fails - transaction should stop"""
+        """First game valid, second game fails - transaction should stop"""
         # Arrange
         user_id = 1
         game_ids = [1, 2]
@@ -741,7 +736,7 @@ class TestPurchaseServiceCurrency:
     """Currency and metadata tests"""
 
     def test_purchase_with_custom_currency(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """✅ Positive: Purchase with custom currency"""
+        """Purchase with custom currency"""
         # Arrange
         user_id = 1
         game_id = 1
@@ -768,7 +763,7 @@ class TestPurchaseServiceCurrency:
         assert call_kwargs.get("currency") == "EUR"
 
     def test_default_currency_is_usd(self, order_service, mock_game_repo, mock_order_repo, mock_user_repo):
-        """✅ Positive: Default currency is USD"""
+        """Default currency is USD"""
         # Arrange
         user_id = 1
         game = GameBuilder.approved_game()
@@ -789,45 +784,3 @@ class TestPurchaseServiceCurrency:
 # =============================================================================
 # TEST SUMMARY
 # =============================================================================
-
-"""
-Test Coverage Summary:
-=====================
-
-Positive Tests (Success Cases):
-  ✅ Purchase single game successfully
-  ✅ Purchase multiple games
-  ✅ Price without discount
-  ✅ Price with discount
-  ✅ High discount (50%)
-  ✅ Free game (0 price)
-  ✅ Custom currency
-  ✅ Default currency (USD)
-  ✅ Complete purchase flow
-  ✅ Floating point precision
-
-Negative Tests (Error Handling):
-  ❌ User not found (404)
-  ❌ User is banned (403)
-  ❌ Game not found (404)
-  ❌ Game not approved (404)
-  ❌ Duplicate games rejected
-  ❌ Empty game list rejected
-  ❌ Already owned game rejected
-  ❌ Negative price game rejected
-  ❌ First game valid, second fails
-
-Repository Interactions:
-  ✅ Correct sequence of calls
-  ✅ Game stats updated correctly
-  ✅ Order item data verified
-  ✅ Repository call counts verified
-
-Mock Isolation:
-  ✅ No database calls
-  ✅ No network calls
-  ✅ 100% dependency mocked
-  ✅ Deterministic results
-
-Total: 27+ comprehensive test cases
-"""

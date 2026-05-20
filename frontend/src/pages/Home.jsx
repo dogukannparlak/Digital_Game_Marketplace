@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { SkeletonHomePage } from '../components/Skeleton';
-
-const API_URL = 'http://localhost:8000';
+import { API_URL } from '../config';
 
 export default function Home() {
   const [games, setGames] = useState([]);

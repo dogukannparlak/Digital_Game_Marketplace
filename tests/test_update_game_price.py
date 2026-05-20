@@ -1,14 +1,7 @@
 """
-Unit Tests for Game Price Update Functionality
+Unit tests for game price update functionality.
 
-Tests cover:
-1. Game not found → HTTPException 404
-2. Unauthorized developer (another dev's game) → HTTPException 403
-3. Invalid price (negative/zero) → ValueError
-4. Successful update → price updated, repository saved
-5. Audit/logging side-effects → mocked and verified
-
-Service Layer: GamePriceUpdateService (100% mocked repository)
+Tests cover authorization, validation, successful updates, and audit logging.
 """
 
 import pytest
@@ -794,53 +787,3 @@ class TestBulkUpdateGamePrices:
                 updates=updates,
                 developer_id=1
             )
-
-
-# ==================== SUMMARY ====================
-
-"""
-TEST COVERAGE SUMMARY:
-
-Game Not Found (3 tests):
-  ✅ Returns HTTPException 404
-  ✅ Does not call save
-  ✅ Repository called with correct game_id
-
-Authorization (4 tests):
-  ✅ Different developer returns 403
-  ✅ Unauthorized does not save
-  ✅ Unauthorized no audit log
-  ✅ Same developer succeeds
-
-Price Validation (5 tests):
-  ✅ Negative price raises ValueError
-  ✅ Zero price raises ValueError
-  ✅ Invalid price does not save
-  ✅ Very small positive price succeeds
-  ✅ Large price succeeds
-
-Successful Update (4 tests):
-  ✅ Returns updated game object
-  ✅ Calls repository.save_game
-  ✅ Saves correct price
-  ✅ Preserves other fields
-
-Audit Logging (5 tests):
-  ✅ Audit log called on success
-  ✅ Audit log called with correct parameters
-  ✅ No audit service → no errors
-  ✅ Price decrease recorded
-  ✅ Audit called after save
-
-Edge Cases (4 tests):
-  ✅ Fractional prices accepted
-  ✅ Same price update succeeds
-  ✅ Multiple updates to same game
-  ✅ Repository order (get before save)
-
-Bulk Updates (2 tests):
-  ✅ Bulk update multiple games
-  ✅ Bulk update stops on error
-
-TOTAL: 27 comprehensive test cases
-"""

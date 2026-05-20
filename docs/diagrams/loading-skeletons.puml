@@ -1,0 +1,14 @@
+@startuml loading-skeletons
+hide circle
+skinparam classAttributeIconSize 0
+title Loading Skeletons
+class Game {
+  +gameId: UUID
+  +title: string
+  +price: decimal
+  +discountPercent: int
+  +status: GameStatus
+  +rejectionReason: string
+}
+
+@enduml

@@ -1563,7 +1563,7 @@ def seed_database():
                 status=models.GameStatus.APPROVED,
                 approved_by=admin.id,
                 cover_image_url=game_data.get("cover_image_url"),
-                total_sales=50 + hash(game_data["title"]) % 10000,  # Fake sales data
+                total_sales=50 + hash(game_data["title"]) % 10000,
                 total_revenue=(50 + hash(game_data["title"]) % 10000) * game_data["price"] * 0.7
             )
             game.genres = [genres[name] for name in genre_names if name in genres]

@@ -19,9 +19,15 @@ app = FastAPI(
 )
 
 # Configure CORS
+# allow_origins=["*"] and allow_credentials=True cannot be used together (CORS spec).
+# Add production origins via ALLOWED_ORIGINS environment variable.
+import os
+_raw_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000")
+_allowed_origins = [o.strip() for o in _raw_origins.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure for production
+    allow_origins=_allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

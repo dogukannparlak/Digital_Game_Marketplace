@@ -3,8 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { SkeletonText, Skeleton, SkeletonAdminGameCard, SkeletonButton } from '../../components/Skeleton';
-
-const API_URL = 'http://localhost:8000';
+import { API_URL } from '../../config';
 
 export default function GameManagement() {
   const [games, setGames] = useState([]);

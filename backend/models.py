@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 from .database import Base
 import datetime
 import enum
-import uuid
 import secrets
 import string
 
@@ -53,7 +52,7 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
-    registration_date = Column(DateTime, default=datetime.datetime.utcnow)
+    registration_date = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
 
     # Role system - default is USER
     role = Column(SQLEnum(UserRole), default=UserRole.USER)
@@ -88,7 +87,7 @@ class Game(Base):
     short_description = Column(String(500), nullable=True)
     price = Column(Float)
     discount_percent = Column(Integer, default=0)
-    release_date = Column(DateTime, default=datetime.datetime.utcnow)
+    release_date = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
 
     # Developer (User with role=DEVELOPER)
     developer_id = Column(Integer, ForeignKey("users.id"))
@@ -134,7 +133,7 @@ class Review(Base):
     game_id = Column(Integer, ForeignKey("games.id"))
     rating = Column(Integer)  # 1-5
     content = Column(Text)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     updated_at = Column(DateTime, nullable=True)
     helpful_count = Column(Integer, default=0)
 
@@ -148,7 +147,7 @@ class CartItem(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     game_id = Column(Integer, ForeignKey("games.id"))
-    added_at = Column(DateTime, default=datetime.datetime.utcnow)
+    added_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
 
     user = relationship("User", backref="cart_items")
     game = relationship("Game")
@@ -159,7 +158,7 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
-    order_date = Column(DateTime, default=datetime.datetime.utcnow)
+    order_date = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     total_amount = Column(Float)
     payment_status = Column(String, default="completed")
 

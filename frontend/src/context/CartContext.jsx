@@ -1,8 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
-
-const API_URL = 'http://localhost:8000';
+import { API_URL } from '../config';
 
 const CartContext = createContext();
 

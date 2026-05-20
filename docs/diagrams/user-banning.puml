@@ -1,0 +1,22 @@
+@startuml user-banning
+hide circle
+skinparam classAttributeIconSize 0
+title User Banning
+enum Role {
+  user
+  developer
+  admin
+}
+
+class User {
+  +userId: UUID
+  +email: string
+  +username: string
+  +passwordHash: string
+  +role: Role
+  +isBanned: bool
+  +displayName: string
+  +avatarUrl: string
+}
+
+@enduml

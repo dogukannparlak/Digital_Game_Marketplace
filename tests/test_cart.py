@@ -17,7 +17,7 @@ class TestAddToCart:
     """Tests for add_to_cart endpoint"""
 
     def test_add_game_to_cart_success(self, mock_db, sample_user, sample_approved_game):
-        """✅ Positive: Successfully add approved game to cart"""
+        """Successfully add approved game to cart"""
         # Arrange
         # Query 1: Get game
         mock_query1 = MagicMock()
@@ -61,7 +61,7 @@ class TestAddToCart:
         assert mock_db.commit.called
 
     def test_add_game_not_found(self, mock_db, sample_user):
-        """❌ Negative: Game not found returns 404"""
+        """Game not found returns 404"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -82,7 +82,7 @@ class TestAddToCart:
         assert "not found" in exc_info.value.detail.lower()
 
     def test_add_game_not_approved(self, mock_db, sample_user, sample_pending_game):
-        """❌ Negative: Unapproved game returns 404"""
+        """Unapproved game returns 404"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -102,7 +102,7 @@ class TestAddToCart:
         assert exc_info.value.status_code == 404
 
     def test_add_already_owned_game(self, mock_db, sample_user, sample_approved_game):
-        """❌ Negative: Already owned game returns 400"""
+        """Already owned game returns 400"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -141,7 +141,7 @@ class TestAddToCart:
         assert "already own" in exc_info.value.detail.lower()
 
     def test_add_already_in_cart(self, mock_db, sample_user, sample_approved_game):
-        """❌ Negative: Game already in cart returns 400"""
+        """Game already in cart returns 400"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -183,7 +183,7 @@ class TestAddToCart:
         assert "already" in detail_lower and ("cart" in detail_lower or "own" in detail_lower)
 
     def test_add_multiple_different_games(self, mock_db, sample_user, multiple_approved_games):
-        """✅ Edge Case: Add multiple different games sequentially"""
+        """Add multiple different games sequentially"""
         # Setup would require multiple calls - simplified test
         pass
 
@@ -193,7 +193,7 @@ class TestGetCart:
     """Tests for get_cart endpoint"""
 
     def test_get_empty_cart(self, mock_db, sample_user):
-        """✅ Positive: Empty cart returns correct schema"""
+        """Empty cart returns correct schema"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -213,7 +213,7 @@ class TestGetCart:
         assert len(result.items) == 0
 
     def test_get_cart_with_single_item(self, mock_db, sample_user, sample_cart_item):
-        """✅ Positive: Cart with one item calculates totals correctly"""
+        """Cart with one item calculates totals correctly"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -235,7 +235,7 @@ class TestGetCart:
         assert len(result.items) == 1
 
     def test_get_cart_with_multiple_items(self, mock_db, sample_user, multiple_cart_items):
-        """✅ Positive: Cart with multiple items sums correctly"""
+        """Cart with multiple items sums correctly"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -256,7 +256,7 @@ class TestGetCart:
         assert result.total == 53.5
 
     def test_get_cart_discount_calculation_precision(self, mock_db, sample_user):
-        """✅ Edge Case: Discount calculations maintain 2 decimal precision"""
+        """Discount calculations maintain 2 decimal precision"""
         # Arrange - Game with price that results in rounding issues
         game = models.Game(
             id=99,
@@ -297,7 +297,7 @@ class TestCheckoutCart:
     """Tests for checkout_cart endpoint"""
 
     def test_checkout_empty_cart_fails(self, mock_db, sample_user):
-        """❌ Negative: Empty cart returns 400"""
+        """Empty cart returns 400"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -314,7 +314,7 @@ class TestCheckoutCart:
         assert "empty" in exc_info.value.detail.lower()
 
     def test_checkout_valid_cart_creates_order(self, mock_db, sample_user, sample_cart_item, sample_approved_game):
-        """✅ Positive: Valid cart checkout creates order and clears cart"""
+        """Valid cart checkout creates order and clears cart"""
         # Arrange - Setup complex mock behavior
         order = models.Order(
             id=1,
@@ -374,7 +374,7 @@ class TestCheckoutCart:
             pass
 
     def test_checkout_game_status_changed_fails(self, mock_db, sample_user, sample_cart_item):
-        """❌ Negative: Game becomes unapproved between add and checkout"""
+        """Game becomes unapproved between add and checkout"""
         # Arrange - Game changes status
         unapproved_game = models.Game(
             id=sample_cart_item.game_id,
@@ -403,7 +403,7 @@ class TestCheckoutCart:
         assert "no longer available" in exc_info.value.detail.lower()
 
     def test_checkout_game_already_owned_fails(self, mock_db, sample_user, sample_cart_item):
-        """❌ Negative: User became owner between add and checkout (double-check works)"""
+        """User became owner between add and checkout (double-check works)"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -442,7 +442,7 @@ class TestCheckoutCart:
         assert "already own" in exc_info.value.detail.lower()
 
     def test_checkout_updates_game_stats(self, mock_db, sample_user, sample_cart_item):
-        """✅ Positive: Game stats (total_sales, total_revenue) updated correctly"""
+        """Game stats (total_sales, total_revenue) updated correctly"""
         # Arrange
         original_sales = sample_cart_item.game.total_sales
         original_revenue = sample_cart_item.game.total_revenue
@@ -483,7 +483,7 @@ class TestCheckoutCart:
         assert mock_db.add.called
 
     def test_checkout_multiple_games_total_calculation(self, mock_db, sample_user, multiple_cart_items):
-        """✅ Edge Case: Multiple games with different discounts - total correct"""
+        """Multiple games with different discounts - total correct"""
         # Arrange
         # Query 1: Get cart items
         mock_query1 = MagicMock()
@@ -524,7 +524,7 @@ class TestCheckoutCart:
         assert mock_db.add.called
 
     def test_checkout_cart_cleared_after_success(self, mock_db, sample_user, sample_cart_item):
-        """✅ Positive: Cart is cleared after successful checkout"""
+        """Cart is cleared after successful checkout"""
         # Arrange
         # Query 1: Get cart items
         mock_query1 = MagicMock()

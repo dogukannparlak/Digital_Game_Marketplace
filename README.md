@@ -1,395 +1,328 @@
-# 🎮 Digital Game Marketplace
+# Digital Game Marketplace
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-2.0.0-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react)](https://reactjs.org/)
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen)]()
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-009688?style=flat&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=flat&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat&logo=sqlite&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat)
 
-> A professional digital game marketplace platform - Full-featured e-commerce system in the style of Steam, Epic Games, and GOG.
+A full-stack digital game storefront inspired by Steam and Epic Games. Users can browse and purchase games, developers can publish and manage their titles, and admins oversee the entire platform — all backed by a role-based REST API.
 
-## 📋 Table of Contents
+---
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Technology Stack](#-technology-stack)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [API Documentation](#-api-documentation)
-- [Project Structure](#-project-structure)
-- [Testing](#-testing)
-- [User Roles](#-user-roles)
-- [Screenshots](#-screenshots)
-- [Contributing](#-contributing)
-- [License](#-license)
+## Table of Contents
 
-## 🎯 Overview
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Demo Credentials](#demo-credentials)
+- [API Reference](#api-reference)
+- [Project Structure](#project-structure)
+- [Testing](#testing)
+- [User Roles](#user-roles)
+- [License](#license)
 
-Digital Game Marketplace is a comprehensive digital game sales platform developed using modern web technologies. Users can purchase games, developers can publish games, and admins can manage the platform.
+---
 
-### Main Functions
+## Features
 
-- 👤 **User System**: Registration, login, profile management
-- 🎮 **Game Store**: Search, filtering, detailed game pages
-- 🛒 **Shopping**: Cart, payment, order history
-- 📚 **Library**: Purchased games
-- ⭐ **Reviews**: Game rating and review system
-- 🔧 **Developer Panel**: Game publishing and management
-- 👨‍💼 **Admin Panel**: Game approval, user management
+**Store & Users**
+- Browse, search, and filter games by genre, name, and price range
+- Shopping cart with multi-game checkout
+- Personal game library and order history
+- Game reviews and ratings (must own the game)
+- User profiles with avatar, bio, and display name
 
-## ✨ Features
+**Developer Portal**
+- Apply to become a developer from any user account
+- Publish games with cover image, trailer, description, and genres
+- Edit games and adjust pricing / discounts at any time
+- Sales dashboard with revenue and unit statistics
 
-### User Features
-- ✅ Registration/login with email and username
-- ✅ Profile customization (avatar, bio, display name)
-- ✅ Game search and filtering (genre, price, rating)
-- ✅ Shopping cart management
-- ✅ Secure payment and order system
-- ✅ Personal game library
-- ✅ Game review and rating
-- ✅ Wishlist system
-- ✅ Order history viewing
+**Admin Panel**
+- Approve, reject, or suspend games
+- Ban and unban users, reassign roles
+- Platform-wide statistics
+- Genre / category management
 
-### Developer Features
-- ✅ Developer account creation
-- ✅ Game publishing (title, description, price, cover image)
-- ✅ Game updates and price changes
-- ✅ List published games
-- ✅ Discount creation and management
-- ✅ Sales statistics viewing
-- ✅ Verified developer badge
+**Technical**
+- JWT authentication with role-based access control (`USER`, `DEVELOPER`, `ADMIN`)
+- Pydantic v2 request/response validation
+- SQLAlchemy ORM with SQLite (easy swap to PostgreSQL)
+- 100+ pytest test cases across unit and integration layers
+- Responsive UI with loading skeletons and live cart badge
 
-### Admin Features
-- ✅ Game approval/rejection system
-- ✅ Game suspension
-- ✅ User banning/activation
-- ✅ Game management (all games)
-- ✅ User management (all users)
-- ✅ Category/genre management
-- ✅ Platform statistics
+---
 
-### Technical Features
-- 🔐 JWT token-based authentication
-- 🛡️ Role-based access control (USER, DEVELOPER, ADMIN)
-- 📊 RESTful API design
-- 🗄️ Database management with SQLAlchemy ORM
-- ✔️ Data validation with Pydantic
-- 🧪 Comprehensive test coverage with Pytest
-- 📱 Responsive web design
-- 🎨 Modern UI/UX (Tailwind CSS)
+## Tech Stack
 
-## 🛠️ Technology Stack
+| Layer | Technology |
+|---|---|
+| Backend framework | FastAPI |
+| Database | SQLite via SQLAlchemy ORM |
+| Auth | JWT (python-jose) + bcrypt |
+| Validation | Pydantic v2 |
+| Frontend framework | React 19 + Vite 7 |
+| Routing | React Router DOM v7 |
+| HTTP client | Axios |
+| Styling | Tailwind CSS v4 |
+| Testing | Pytest, pytest-cov, pytest-mock |
 
-### Backend
-- **Framework**: FastAPI 0.109+
-- **Database**: SQLite (SQLAlchemy ORM)
-- **Authentication**: JWT (python-jose, passlib)
-- **Validation**: Pydantic v2
-- **Testing**: Pytest, pytest-asyncio
-- **Server**: Uvicorn
+---
 
-### Frontend
-- **Framework**: React 19.2
-- **Build Tool**: Vite 7.2
-- **Routing**: React Router DOM v7
-- **HTTP Client**: Axios 1.13
-- **Styling**: Tailwind CSS 4.1
-- **Linting**: ESLint 9
+## Getting Started
 
-### DevOps
-- **Version Control**: Git
-- **Package Management**: pip (Python), npm (JavaScript)
-- **Documentation**: Markdown, OpenAPI/Swagger
+### Prerequisites
 
-## 🚀 Installation
+- Python 3.10+
+- Node.js 18+
+- npm
 
-### Requirements
-- Python 3.10 or higher
-- Node.js 18 or higher
-- npm or yarn
-- Git
-
-### 1️⃣ Clone the Project
+### 1. Clone
 
 ```bash
-git clone https://github.com/dogukannparlak/Digital_Game_Marketplace
+git clone https://github.com/dogukannparlak/Digital_Game_Marketplace.git
 cd Digital_Game_Marketplace
 ```
 
-### 2️⃣ Backend Setup
+### 2. Backend
 
 ```bash
-# Create virtual environment
+# Create and activate a virtual environment
 python -m venv .venv
 
-# Activate virtual environment
-# Windows:
+# Windows
 .venv\Scripts\activate
-# Linux/macOS:
+# macOS / Linux
 source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Frontend Setup
+Copy the example env file and set your own secret key:
+
+```bash
+cp .env.example .env
+```
+
+### 3. Frontend
 
 ```bash
 cd frontend
+cp .env.example .env   # API URL defaults to http://localhost:8000
 npm install
 ```
 
-### 4️⃣ Database Preparation
+### 4. Seed the database
 
 ```bash
-# Run in the root directory
+# Run from the project root
 python -m backend.seed_data
 ```
 
-This command creates sample data:
-- Admin user: `admin@marketplace.com` / `admin123`
-- Developer user: `dev@marketplace.com` / `dev123`
-- Regular user: `user@marketplace.com` / `user123`
-- Sample games and categories
+### 5. Run
 
-## 💻 Usage
-
-### Quick Start (Windows)
+**Windows (one command):**
 
 ```bash
-# Start both backend and frontend with one command
 start_project.bat
-```
-
-or PowerShell:
-
-```powershell
+# or
 .\start_project.ps1
 ```
 
-### Manual Start
-
-#### Backend (Terminal 1)
+**Manual:**
 
 ```bash
-# In root directory
+# Terminal 1 — backend
 uvicorn backend.main:app --reload --port 8000
+
+# Terminal 2 — frontend
+cd frontend && npm run dev
 ```
 
-Backend: http://localhost:8000
-API Docs: http://localhost:8000/docs
-
-#### Frontend (Terminal 2)
-
-```bash
-cd frontend
-npm run dev
-```
-
-Frontend: http://localhost:5173
-
-## 📚 API Documentation
-
-API documentation is automatically generated and accessible at the following addresses:
-
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-- **OpenAPI JSON**: http://localhost:8000/openapi.json
-
-### Main Endpoints
-
-#### Authentication
-```http
-POST /token                    # Login (get token)
-POST /register                 # Register new user
-GET  /me                       # Current user info
-POST /become-developer         # Create developer account
-```
-
-#### Games
-```http
-GET    /games                  # List games (filtering, search)
-POST   /games                  # Publish new game (DEVELOPER)
-GET    /games/{id}             # Game details
-PUT    /games/{id}             # Update game (DEVELOPER)
-DELETE /games/{id}             # Delete game (DEVELOPER)
-PUT    /games/{id}/price       # Update price (DEVELOPER)
-```
-
-#### Cart & Orders
-```http
-GET    /cart                   # View cart
-POST   /cart/add/{game_id}     # Add to cart
-DELETE /cart/remove/{game_id}  # Remove from cart
-POST   /cart/checkout          # Purchase
-GET    /orders                 # Order history
-GET    /orders/{id}            # Order details
-```
-
-#### Admin
-```http
-GET    /admin/games/pending    # Pending games
-PUT    /admin/games/{id}/approve     # Approve game
-PUT    /admin/games/{id}/reject      # Reject game
-PUT    /admin/games/{id}/suspend     # Suspend game
-PUT    /admin/users/{id}/ban         # Ban user
-GET    /admin/users                  # All users
-```
-
-For detailed API reference: [docs/API_REFERENCE.md](docs/API_REFERENCE.md)
-
-## 📁 Project Structure
-
-```
-Digital_Game_Marketplace/
-├── 📂 backend/              # FastAPI Backend
-│   ├── main.py             # Main application
-│   ├── models.py           # SQLAlchemy models
-│   ├── schemas.py          # Pydantic schemas
-│   ├── database.py         # Database configuration
-│   ├── auth_utils.py       # JWT and encryption
-│   ├── seed_data.py        # Sample data creation
-│   └── 📂 routers/         # API endpoints
-│       ├── auth.py         # Authentication
-│       ├── games.py        # Game operations
-│       ├── users.py        # User operations
-│       ├── cart.py         # Cart operations
-│       ├── orders.py       # Order operations
-│       ├── admin.py        # Admin operations
-│       └── genres.py       # Category operations
-│
-├── 📂 frontend/            # React Frontend
-│   ├── 📂 src/
-│   │   ├── App.jsx         # Main component
-│   │   ├── main.jsx        # Entry point
-│   │   ├── 📂 components/  # Reusable components
-│   │   ├── 📂 pages/       # Page components
-│   │   │   ├── Home.jsx
-│   │   │   ├── GameDetail.jsx
-│   │   │   ├── Cart.jsx
-│   │   │   ├── Library.jsx
-│   │   │   ├── DeveloperDashboard.jsx
-│   │   │   └── 📂 admin/
-│   │   └── 📂 context/     # React Context (Auth, Cart)
-│   ├── package.json
-│   └── vite.config.js
-│
-├── 📂 tests/               # Test files
-│   ├── conftest.py         # Pytest configuration
-│   ├── test_games_search_filter.py
-│   ├── test_purchase_service.py
-│   ├── test_admin.py
-│   ├── test_cart.py
-│   └── test_orders.py
-│
-├── 📂 docs/                # Documentation
-│   ├── API_REFERENCE.md
-│   ├── INSTALLATION.md
-│   └── ...
-│
-├── 📂 diagrams/            # PlantUML diagrams
-│   ├── US-1.puml          # User Story diagrams
-│   └── ...
-│
-├── requirements.txt        # Python dependencies
-├── pytest.ini             # Pytest configuration
-├── start_project.bat      # Windows startup script
-├── start_project.ps1      # PowerShell startup script
-└── README.md              # This file
-```
-
-## 🧪 Testing
-
-### Run All Tests
-
-```bash
-# In root directory
-pytest
-```
-
-### Test with Coverage Report
-
-```bash
-pytest --cov=backend --cov-report=html
-```
-
-HTML report: `htmlcov/index.html`
-
-### Specific Test File
-
-```bash
-pytest tests/test_games_search_filter.py -v
-pytest tests/test_purchase_service.py -v
-pytest tests/test_admin.py -v
-```
-
-### Test Statistics
-- ✅ **100+ Test Cases**
-- ✅ **90%+ Code Coverage**
-- ✅ Unit Tests
-- ✅ Integration Tests
-- ✅ API Endpoint Tests
-
-
-## 👥 User Roles
-
-### 🟢 USER (Regular User)
-- View and search games
-- Add to cart and purchase
-- Library access
-- Write reviews and ratings
-- Edit profile
-
-### 🔵 DEVELOPER
-- All USER role permissions
-- Publish games
-- Update games
-- Price and discount management
-- View sales statistics
-
-### 🔴 ADMIN
-- All DEVELOPER role permissions
-- Approve/reject games
-- Suspend games
-- Ban users
-- Manage all games and users
-- Platform statistics
-
-## 📸 Screenshots
-
-### Home Page
-Modern, user-friendly game store interface
-
-### Game Details
-Comprehensive game information, reviews, and ratings
-
-### Developer Panel
-Game publishing and management interface
-
-### Admin Panel
-Game approval and user management
-
-## 🔒 Security
-
-- ✅ Passwords hashed with bcrypt
-- ✅ JWT token-based authentication
-- ✅ CORS middleware configuration
-- ✅ SQL injection protection (SQLAlchemy ORM)
-- ✅ Input validation (Pydantic)
-- ✅ Role-based access control
-- ✅ Session management
-
-## 📄 License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Authors
-
-- **Doğukan Parlak**
-- **Ömer Kaya**
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:5173 |
+| Backend API | http://localhost:8000 |
+| Swagger UI | http://localhost:8000/docs |
+| ReDoc | http://localhost:8000/redoc |
 
 ---
 
-⭐ **If you like this project, don't forget to give it a star!**
+## Demo Credentials
 
-💻 **Happy Coding!** 🎮
+| Role | Username | Password |
+|---|---|---|
+| Admin | `admin` | `admin123` |
+| Player | `player` | `player123` |
+| Developer | `rockstar_games` | `dev123` |
+
+---
+
+## API Reference
+
+Full reference: [`docs/API_REFERENCE.md`](docs/API_REFERENCE.md)
+
+### Authentication
+
+```
+POST  /token                     Login — returns JWT
+POST  /users/                    Register new account
+GET   /me                        Current user profile
+PUT   /me                        Update profile
+PUT   /me/password               Change password
+POST  /become-developer          Upgrade account to developer
+```
+
+### Games
+
+```
+GET    /games                    List approved games (search, filter, paginate)
+GET    /games/{id}               Game detail
+GET    /games/{id}/reviews       Reviews for a game
+POST   /games/{id}/review        Post a review (must own game)
+POST   /games                    Publish a game              [DEVELOPER]
+PUT    /games/{id}               Update game / price         [DEVELOPER]
+DELETE /games/{id}               Delete game                 [DEVELOPER]
+GET    /games/developer/my-games My published games          [DEVELOPER]
+GET    /games/developer/stats    Sales statistics            [DEVELOPER]
+```
+
+### Cart & Orders
+
+```
+GET    /cart                     View cart
+POST   /cart/add/{game_id}       Add to cart
+DELETE /cart/remove/{game_id}    Remove from cart
+DELETE /cart/clear               Clear cart
+POST   /cart/checkout            Checkout and create order
+GET    /orders                   Order history
+GET    /orders/{id}              Order detail
+GET    /orders/library           Owned game IDs
+```
+
+### Admin
+
+```
+GET    /admin/stats                       Platform statistics   [ADMIN]
+GET    /admin/users                       All users             [ADMIN]
+PUT    /admin/users/{id}/ban              Ban user              [ADMIN]
+PUT    /admin/users/{id}/role             Change user role      [ADMIN]
+GET    /admin/games/pending               Pending approvals     [ADMIN]
+PUT    /admin/games/{id}/approve          Approve game          [ADMIN]
+PUT    /admin/games/{id}/reject           Reject game           [ADMIN]
+PUT    /admin/games/{id}/suspend          Suspend game          [ADMIN]
+```
+
+---
+
+## Project Structure
+
+```
+Digital_Game_Marketplace/
+├── backend/
+│   ├── main.py              # App factory, CORS, router registration
+│   ├── models.py            # SQLAlchemy ORM models
+│   ├── schemas.py           # Pydantic request/response schemas
+│   ├── database.py          # Engine and session factory
+│   ├── auth_utils.py        # JWT decode, role guard dependencies
+│   ├── seed_data.py         # Demo data loader
+│   └── routers/
+│       ├── auth.py          # /token, /me, /become-developer
+│       ├── users.py         # /users
+│       ├── games.py         # /games
+│       ├── genres.py        # /genres
+│       ├── cart.py          # /cart
+│       ├── orders.py        # /orders
+│       └── admin.py         # /admin
+│
+├── frontend/
+│   └── src/
+│       ├── config.js        # Central API_URL (reads VITE_API_URL)
+│       ├── App.jsx          # Routes + context providers
+│       ├── context/
+│       │   ├── AuthContext.jsx
+│       │   └── CartContext.jsx
+│       ├── components/
+│       │   ├── Navbar.jsx
+│       │   └── Skeleton.jsx
+│       └── pages/
+│           ├── Home.jsx
+│           ├── GameDetail.jsx
+│           ├── Cart.jsx
+│           ├── Library.jsx
+│           ├── OrderHistory.jsx
+│           ├── Profile.jsx
+│           ├── DeveloperDashboard.jsx
+│           ├── EditGame.jsx
+│           └── admin/
+│               ├── AdminDashboard.jsx
+│               ├── UserManagement.jsx
+│               ├── GameManagement.jsx
+│               └── AdminPublishGame.jsx
+│
+├── tests/
+│   ├── conftest.py
+│   ├── test_admin.py
+│   ├── test_cart.py
+│   ├── test_orders.py
+│   ├── test_games_search_filter.py
+│   ├── test_purchase_service.py
+│   ├── test_update_game_price.py
+│   └── test_view_developer_games.py
+│
+├── docs/                    # Extended documentation + PlantUML diagrams
+├── .env.example             # Backend environment template
+├── requirements.txt
+├── pytest.ini
+├── start_project.bat
+└── start_project.ps1
+```
+
+---
+
+## Testing
+
+```bash
+# Run all tests
+pytest
+
+# With coverage report
+pytest --cov=backend --cov-report=html
+# Open htmlcov/index.html in your browser
+
+# Run a specific file
+pytest tests/test_cart.py -v
+pytest tests/test_admin.py -v
+
+# Run by marker
+pytest -m unit
+pytest -m integration
+```
+
+**Coverage target:** `backend/` package · **Test count:** 100+
+
+---
+
+## User Roles
+
+| Role | Capabilities |
+|---|---|
+| `USER` | Browse store, buy games, manage cart, write reviews, edit profile |
+| `DEVELOPER` | Everything a USER can do + publish/manage own games, view sales stats |
+| `ADMIN` | Everything a DEVELOPER can do + approve/suspend games, ban users, manage platform |
+
+Any `USER` can upgrade to `DEVELOPER` via `POST /become-developer`.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+*Built by [Doğukan Parlak](https://github.com/dogukannparlak)*

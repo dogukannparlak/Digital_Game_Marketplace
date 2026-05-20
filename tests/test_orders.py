@@ -17,7 +17,7 @@ class TestCreateOrder:
     """Tests for create_order endpoint"""
 
     def test_create_order_single_game_success(self, mock_db, sample_user, sample_approved_game):
-        """✅ Positive: Create order with single approved game"""
+        """Create order with single approved game"""
         # Arrange
         order_create = schemas.OrderCreate(game_ids=[sample_approved_game.id])
         order_response = models.Order(
@@ -76,7 +76,7 @@ class TestCreateOrder:
         assert mock_db.refresh.called
 
     def test_create_order_empty_game_ids_fails(self, mock_db, sample_user):
-        """❌ Negative: Empty game_ids list returns 400"""
+        """Empty game_ids list returns 400"""
         # Arrange
         order_create = schemas.OrderCreate(game_ids=[])
 
@@ -92,7 +92,7 @@ class TestCreateOrder:
         assert "no games" in exc_info.value.detail.lower()
 
     def test_create_order_duplicate_game_ids_fails(self, mock_db, sample_user):
-        """❌ Negative: Duplicate game IDs in order returns 400"""
+        """Duplicate game IDs in order returns 400"""
         # Arrange
         order_create = schemas.OrderCreate(game_ids=[1, 2, 1])  # ID 1 twice
 
@@ -108,7 +108,7 @@ class TestCreateOrder:
         assert "duplicate" in exc_info.value.detail.lower()
 
     def test_create_order_nonexistent_game_fails(self, mock_db, sample_user):
-        """❌ Negative: Non-existent game returns 404"""
+        """Non-existent game returns 404"""
         # Arrange
         order_create = schemas.OrderCreate(game_ids=[999])
 
@@ -131,7 +131,7 @@ class TestCreateOrder:
         assert "not found" in exc_info.value.detail.lower()
 
     def test_create_order_unapproved_game_fails(self, mock_db, sample_user, sample_pending_game):
-        """❌ Negative: Unapproved game returns 404 (not visible)"""
+        """Unapproved game returns 404 (not visible)"""
         # Arrange
         order_create = schemas.OrderCreate(game_ids=[sample_pending_game.id])
 
@@ -153,7 +153,7 @@ class TestCreateOrder:
         assert exc_info.value.status_code == 404
 
     def test_create_order_already_owned_game_fails(self, mock_db, sample_user, sample_approved_game):
-        """❌ Negative: Buying already owned game returns 400"""
+        """Buying already owned game returns 400"""
         # Arrange
         order_create = schemas.OrderCreate(game_ids=[sample_approved_game.id])
         owned_item = models.OrderItem(
@@ -186,7 +186,7 @@ class TestCreateOrder:
         assert "already own" in exc_info.value.detail.lower()
 
     def test_create_order_multiple_games_success(self, mock_db, sample_user, multiple_approved_games):
-        """✅ Positive: Order with multiple different games"""
+        """Order with multiple different games"""
         # Arrange
         game_ids = [game.id for game in multiple_approved_games]
         order_create = schemas.OrderCreate(game_ids=game_ids)
@@ -251,7 +251,7 @@ class TestCreateOrder:
         assert mock_db.add.called
 
     def test_create_order_price_with_discount_calculation(self, mock_db, sample_user, sample_discounted_game):
-        """✅ Edge Case: Price calculation with discount applied correctly"""
+        """Price calculation with discount applied correctly"""
         # Arrange
         order_create = schemas.OrderCreate(game_ids=[sample_discounted_game.id])
 
@@ -302,7 +302,7 @@ class TestCreateOrder:
         assert mock_db.add.called
 
     def test_create_order_total_amount_rounded_to_two_decimals(self, mock_db, sample_user):
-        """✅ Edge Case: Total amount properly rounded to 2 decimals"""
+        """Total amount properly rounded to 2 decimals"""
         # Arrange - Game with price that creates rounding issues
         game = models.Game(
             id=50,
@@ -356,7 +356,7 @@ class TestCreateOrder:
         assert mock_db.add.called
 
     def test_create_order_updates_game_stats_atomically(self, mock_db, sample_user, sample_approved_game):
-        """✅ Positive: Game stats (total_sales, total_revenue) updated in transaction"""
+        """Game stats (total_sales, total_revenue) updated in transaction"""
         # Arrange
         order_create = schemas.OrderCreate(game_ids=[sample_approved_game.id])
         initial_sales = sample_approved_game.total_sales
@@ -409,7 +409,7 @@ class TestGetOwnedGameIds:
     """Tests for get_owned_game_ids endpoint"""
 
     def test_get_owned_games_empty_returns_empty_list(self, mock_db, sample_user):
-        """✅ Positive: User with no games returns empty list"""
+        """User with no games returns empty list"""
         # Arrange
         mock_query = MagicMock()
         mock_join = MagicMock()
@@ -430,7 +430,7 @@ class TestGetOwnedGameIds:
         assert isinstance(result, list)
 
     def test_get_owned_games_returns_all_game_ids(self, mock_db, sample_user):
-        """✅ Positive: Returns all owned game IDs for user"""
+        """Returns all owned game IDs for user"""
         # Arrange
         owned_game_ids = [(1,), (3,), (5,)]  # Query returns tuples
 
@@ -453,7 +453,7 @@ class TestGetOwnedGameIds:
         assert len(result) == 3
 
     def test_get_owned_games_with_single_game(self, mock_db, sample_user):
-        """✅ Edge Case: User with exactly one owned game"""
+        """User with exactly one owned game"""
         # Arrange
         owned_game_ids = [(42,)]
 
@@ -476,7 +476,7 @@ class TestGetOwnedGameIds:
         assert len(result) == 1
 
     def test_get_owned_games_join_query_correct(self, mock_db, sample_user):
-        """✅ Positive: Query correctly joins Order and OrderItem tables"""
+        """Query correctly joins Order and OrderItem tables"""
         # Arrange
         mock_query = MagicMock()
         mock_join = MagicMock()
@@ -503,7 +503,7 @@ class TestGetMyOrders:
     """Tests for get_my_orders endpoint"""
 
     def test_get_my_orders_empty(self, mock_db, sample_user):
-        """✅ Positive: User with no orders returns empty list"""
+        """User with no orders returns empty list"""
         # Arrange
         mock_query = MagicMock()
 
@@ -523,7 +523,7 @@ class TestGetMyOrders:
         assert result == []
 
     def test_get_my_orders_returns_orders_with_items(self, mock_db, sample_user, order_with_items):
-        """✅ Positive: Returns all user's orders with items loaded"""
+        """Returns all user's orders with items loaded"""
         # Arrange
         mock_query = MagicMock()
 
@@ -545,7 +545,7 @@ class TestGetMyOrders:
         assert len(result[0].items) == 3
 
     def test_get_my_orders_ordered_by_date_desc(self, mock_db, sample_user):
-        """✅ Positive: Orders returned in descending date order (newest first)"""
+        """Orders returned in descending date order (newest first)"""
         # Arrange - Multiple orders with different dates
         old_order = models.Order(
             id=1,

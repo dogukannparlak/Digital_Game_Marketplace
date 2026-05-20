@@ -110,7 +110,7 @@ const {access_token} = await response.json();
 
 ---
 
-### POST /register
+### POST /users/
 New user registration
 
 **Request Body** (JSON):
@@ -393,15 +393,15 @@ Authorization: Bearer <token>
 
 ---
 
-### PUT /games/{game_id}/price
-Update game price (Owner or ADMIN)
+### PUT /games/{game_id}
+Update game details including price and discount (Owner only)
 
 **Headers**:
 ```
 Authorization: Bearer <token>
 ```
 
-**Request Body** (JSON):
+**Request Body** (JSON) — all fields optional:
 ```json
 {
   "price": 39.99,
@@ -414,8 +414,7 @@ Authorization: Bearer <token>
 {
   "id": 10,
   "price": 39.99,
-  "discount_percent": 20,
-  "final_price": 31.99
+  "discount_percent": 20
 }
 ```
 
@@ -437,7 +436,7 @@ Authorization: Bearer <token>
 
 ---
 
-### GET /games/developer/me
+### GET /games/developer/my-games
 My published games (DEVELOPER)
 
 **Headers**:

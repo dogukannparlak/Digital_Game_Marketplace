@@ -17,7 +17,7 @@ class TestApproveGame:
     """Tests for approve_game endpoint"""
 
     def test_approve_pending_game_success(self, mock_db, admin_user, sample_pending_game):
-        """✅ Positive: Approve pending game - status and metadata updated"""
+        """Approve pending game - status and metadata updated"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -44,7 +44,7 @@ class TestApproveGame:
         assert mock_db.commit.called
 
     def test_approve_nonexistent_game_fails(self, mock_db, admin_user):
-        """❌ Negative: Approve non-existent game returns 404"""
+        """Approve non-existent game returns 404"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -65,7 +65,7 @@ class TestApproveGame:
         assert "not found" in exc_info.value.detail.lower()
 
     def test_approve_already_approved_game_fails(self, mock_db, admin_user, sample_approved_game):
-        """❌ Negative: Approve already approved game returns 400"""
+        """Approve already approved game returns 400"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -86,7 +86,7 @@ class TestApproveGame:
         assert "already approved" in exc_info.value.detail.lower()
 
     def test_approve_rejected_game_updates_status(self, mock_db, admin_user):
-        """✅ Positive: Approve a previously rejected game - status changes"""
+        """Approve a previously rejected game - status changes"""
         # Arrange
         rejected_game = models.Game(
             id=5,
@@ -125,7 +125,7 @@ class TestApproveGame:
         assert result["message"] == "Game approved successfully"
 
     def test_approve_game_sets_admin_id_correctly(self, mock_db, admin_user, sample_pending_game):
-        """✅ Positive: approved_by field set to correct admin ID"""
+        """approved_by field set to correct admin ID"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -148,7 +148,7 @@ class TestApproveGame:
         assert sample_pending_game.approved_by == 2  # admin_user.id = 2
 
     def test_approve_game_sets_timestamp(self, mock_db, admin_user, sample_pending_game):
-        """✅ Positive: approved_at timestamp set to current time"""
+        """approved_at timestamp set to current time"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -174,7 +174,7 @@ class TestApproveGame:
         assert before_approval <= sample_pending_game.approved_at <= after_approval
 
     def test_approve_game_non_admin_fails(self, mock_db, sample_user, sample_pending_game):
-        """❌ Negative: Non-admin user cannot approve games (403)"""
+        """Non-admin user cannot approve games (403)"""
         # This test would normally be caught by the dependency injection
         # We test it here for completeness - in real scenario, require_admin() would reject
 
@@ -202,7 +202,7 @@ class TestApproveGame:
         # This test documents that behavior
 
     def test_approve_suspended_game(self, mock_db, admin_user):
-        """✅ Positive: Approve a suspended game (re-enable it)"""
+        """Approve a suspended game (re-enable it)"""
         # Arrange
         suspended_game = models.Game(
             id=6,
@@ -239,7 +239,7 @@ class TestApproveGame:
         assert suspended_game.rejection_reason is None
 
     def test_approve_multiple_games_independently(self, mock_db, admin_user, multiple_approved_games):
-        """✅ Edge Case: Multiple games can be approved independently"""
+        """Multiple games can be approved independently"""
         # Arrange - Multiple pending games
         pending_games = [
             models.Game(
@@ -292,7 +292,7 @@ class TestApproveGameIntegration:
     """Integration-style tests for approve_game (still using mocks)"""
 
     def test_approve_game_database_transaction_committed(self, mock_db, admin_user, sample_pending_game):
-        """✅ Positive: Database transaction is committed after approval"""
+        """Database transaction is committed after approval"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()
@@ -319,7 +319,7 @@ class TestApproveGameIntegration:
         assert commit_called
 
     def test_approve_game_idempotent_second_call_fails(self, mock_db, admin_user, sample_pending_game):
-        """✅ Positive: Approving same game twice fails on second attempt"""
+        """Approving same game twice fails on second attempt"""
         # Arrange
         mock_query = MagicMock()
         mock_filter = MagicMock()

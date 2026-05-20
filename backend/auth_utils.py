@@ -3,6 +3,7 @@ Authentication and Authorization Utilities
 Role-based access control for the Digital Game Marketplace
 """
 
+import os
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
@@ -11,8 +12,8 @@ from typing import List, Optional
 from . import models, schemas
 from .database import SessionLocal
 
-# Configuration
-SECRET_KEY = "your-secret-key-keep-it-secret-in-production"
+# Configuration — override SECRET_KEY via environment variable in production
+SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-this-in-production")
 ALGORITHM = "HS256"
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")

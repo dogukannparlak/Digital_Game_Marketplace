@@ -4,8 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { SkeletonGameDetail } from '../components/Skeleton';
-
-const API_URL = 'http://localhost:8000';
+import { API_URL } from '../config';
 
 export default function GameDetail() {
   const { id } = useParams();
